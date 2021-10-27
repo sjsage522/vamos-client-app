@@ -20,7 +20,9 @@ class App extends React.Component {
     componentDidMount() {
         request("/boards", "GET", null)
             .then((response) => response.json().then((json) => {
-                this.setState({items: json.data, loading: false})
+                this.setState({items: json.data.sort(function (item1, item2) {
+                        return item2.id - item1.id;
+                    }), loading: false})
             }))
             .catch((response) => {
                 response.json().then((json) => {
