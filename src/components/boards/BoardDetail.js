@@ -39,6 +39,12 @@ class BoardDetail extends React.Component {
         this._isMounted = false
     }
 
+    deleteBoardHandler = (id) => {
+        request("/board/" + id, "DELETE", null);
+        alert("삭제 되었습니다.");
+        window.location.href = "/";
+    }
+
     render() {
         const board = this.board;
         let detail = (
@@ -127,6 +133,16 @@ class BoardDetail extends React.Component {
                                                 수정하기
                                             </Button>
                                         </Link>
+                                        : null
+                                }
+                                {
+                                    board.user_info.email === this.state.email ?
+                                        <Button size="medium"
+                                                color="secondary"
+                                                onClick={() => this.deleteBoardHandler(board.id)}
+                                        >
+                                            삭제하기
+                                        </Button>
                                         : null
                                 }
                                 {/*<Button size="medium" color="secondary">*/}
