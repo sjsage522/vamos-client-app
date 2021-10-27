@@ -17,6 +17,19 @@ class Location extends React.Component {
         }
     }
 
+    componentDidMount() {
+        request("/user/me", "GET", null)
+            .then((response) => response.json().then((json) => {
+                const location = json.data.location;
+                if (!location) alert("위치정보를 설정해 주세요.");
+            }))
+            .catch(response => {
+                if (response.status === 401) {
+                    window.location.href = "/login";
+                }
+            });
+    }
+
     execDaumPostcode() {
         let mapContainer = document.getElementById('map'), // 지도를 표시할 div
             mapOption = {
@@ -95,7 +108,7 @@ class Location extends React.Component {
                     <Paper style={{margin: '3% 30% 0 30%', padding: 10}}>
                         <Link href="/">
                             <Typography variant="body2" color="textPrimary" align="center">
-                                뒤로 가기
+                                메인으로
                             </Typography>
                         </Link>
                     </Paper>
