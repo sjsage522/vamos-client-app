@@ -6,6 +6,8 @@ import Login from "./components/users/Login";
 import SignUp from "./components/users/SignUp";
 import Location from "./components/users/Location";
 import UploadBoard from "./components/boards/UploadBoard";
+import BoardDetail from "./components/boards/BoardDetail";
+import NotFound from "./components/NotFound";
 
 function CopyRight() {
     return (
@@ -24,23 +26,24 @@ class AppRouter extends React.Component {
                 <Router>
                     <div>
                         <Switch>
-                            <Route path="/login">
-                                <Login />
-                            </Route>
-                            <Route path="/signup">
-                                <SignUp/>
-                            </Route>
-                            <Route path="/location">
-                                <Location/>
-                            </Route>
-                            <Route path="/upload"
-                                   render={(props) => (
-                                       <UploadBoard {...props}/>
-                                   )}
-                            />
-                            <Route path="/">
+                            <Route exact path="/">
                                 <App/>
                             </Route>
+                            <Route exact path="/board/:id"
+                                   component={BoardDetail}/>
+                            <Route exact path="/upload">
+                                <UploadBoard/>
+                            </Route>
+                            <Route exact path="/location">
+                                <Location/>
+                            </Route>
+                            <Route exact path="/login">
+                                <Login />
+                            </Route>
+                            <Route exact path="/signup">
+                                <SignUp/>
+                            </Route>
+                            <Route component={NotFound}/>
                         </Switch>
                     </div>
                     <Box mt={5}>
