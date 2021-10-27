@@ -47,7 +47,7 @@ class Board extends React.Component {
                                                 key={idx}
                                                 src={image.file_download_uri}
                                                 alt="First slide"
-                                                style={{width: "20%", height: "30%", border: "3px solid pink", borderRadius: "16px"}}
+                                                style={{width: "200px", height: "200px", border: "3px solid pink", borderRadius: "16px"}}
                                             />
                                         );
                                     }) : ""
@@ -62,7 +62,8 @@ class Board extends React.Component {
                                 {board.title}
                             </Typography>
                             <Typography variant="body2" component="p">
-                                {board.content}
+                                {board.content.substring(0, 150)}
+                                {board.content.length > 150 ? <span>...</span> : ""}
                             </Typography>
                         </CardContent>
                         <CardActions style={{justifyContent: "center"}}>
