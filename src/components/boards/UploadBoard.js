@@ -167,7 +167,7 @@ class UploadBoard extends React.Component {
                             />
                             <p/>
                             <label className="input-file-button" form="files">
-                                업로드
+                                클릭
                                 <input type="file" id="files" multiple onChange={this.onInputFilesChange}
                                        style={{display: "none"}}/>
                             </label>
@@ -220,7 +220,6 @@ class UploadBoard extends React.Component {
                             <p/>
                             <FormControl fullWidth>
                                 <NativeSelect
-                                    defaultValue={0}
                                     value={CATEGORIES[this.state.categoryNumber]}
                                     onChange={this.categoryChangeHandler}
                                 >
