@@ -36,7 +36,7 @@ class UploadBoard extends React.Component {
 
     categoryChangeHandler(event) {
         const thisItem = this.state.item;
-        thisItem.categoryNumber = parseInt(event.target.value) + 1;
+        thisItem.categoryNumber = parseInt(event.target.value);
         this.setState({
             item: thisItem
         });
