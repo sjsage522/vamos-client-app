@@ -11,6 +11,7 @@ import {TrendingFlat} from "@material-ui/icons";
 import Carousel from "react-material-ui-carousel";
 import {ThemeProvider} from "@material-ui/core/styles";
 import {unstable_createMuiStrictModeTheme} from '@material-ui/core/styles';
+import {NavLink} from "react-router-dom";
 
 const theme = unstable_createMuiStrictModeTheme();
 
@@ -96,9 +97,19 @@ class Board extends React.Component {
                             </Typography>
                         </CardContent>
                         <CardActions style={{justifyContent: "center"}}>
-                            <Button size="small" color="secondary">
-                                Read More<TrendingFlat/>
-                            </Button>
+                            <NavLink
+                                to={{
+                                    pathname: `/board/${board.id}`,
+                                    state: board,
+                                }}
+                                style={{
+                                    textDecorationLine: 'none',
+                                }}
+                            >
+                                <Button size="small" color="secondary">
+                                    더보기<TrendingFlat/>
+                                </Button>
+                            </NavLink>
                         </CardActions>
                     </Card>
                 </Grid>

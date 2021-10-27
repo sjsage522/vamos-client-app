@@ -61,3 +61,20 @@ export function uploadBoard(item) {
         body: formData,
     })
 }
+
+export function updateBoard(item, id) {
+    const formData = new FormData();
+    formData.append('title', item.title);
+    formData.append('content', item.content);
+    formData.append('price', item.price);
+    formData.append('categoryNumber', item.categoryNumber);
+    for (let i=0; i<item.files.length; i++) {
+        formData.append("files", item.files[i]);
+    }
+
+    return fetch(API_BASE_URL + "/board/" + id, {
+        credentials: 'include',
+        method: "PATCH",
+        body: formData,
+    })
+}

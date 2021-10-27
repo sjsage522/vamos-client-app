@@ -30,7 +30,11 @@ class AppRouter extends React.Component {
                                 <App/>
                             </Route>
                             <Route exact path="/board/:id"
-                                   component={BoardDetail}/>
+                                   component={BoardDetail}
+                            />
+                            <Route exact path="/update/board/:id"
+                                   component={UploadBoard}
+                            />
                             <Route exact path="/upload">
                                 <UploadBoard/>
                             </Route>

@@ -1,16 +1,11 @@
 import React from "react";
-import Carousel from 'react-material-ui-carousel'
-import {
-    Button,
-    Grid,
-    Link,
-    Paper,
-    TextField,
-    Typography,
-    FormControl,
-    NativeSelect,
-} from "@material-ui/core";
-import {uploadBoard} from "../../util/APIUtils";
+import Carousel from 'react-material-ui-carousel';
+import "./Board.css";
+import {Button, FormControl, Grid, Link, NativeSelect, Paper, TextField, Typography,} from "@material-ui/core";
+import {updateBoard, uploadBoard} from "../../util/APIUtils";
+import {ThemeProvider, unstable_createMuiStrictModeTheme} from "@material-ui/core/styles";
+
+const theme = unstable_createMuiStrictModeTheme();
 
 const CATEGORIES = [
     '디지털기기', '생활가전', '가구/인테리어', '유아동', '유아도서',
@@ -23,15 +18,53 @@ class UploadBoard extends React.Component {
         super(props);
         this.state = {
             item: {
+                id: "",
                 title: "",
-                content: "",
-                price: "",
+                content: "Content",
+                price: 0,
                 categoryNumber: 0,
                 files: [],
                 filesBase64: [],
             },
         };
         this.categoryChangeHandler = this.categoryChangeHandler.bind(this);
+    }
+
+    componentDidMount() {
+        if (typeof this.props.location != 'undefined') {
+            const board = this.props.location.state;
+            const thisItem = this.state.item;
+            thisItem.id = board.id;
+            thisItem.title = board.title;
+            thisItem.content = board.content;
+            thisItem.price = board.price;
+            thisItem.categoryNumber = board.category_info.id;
+
+            let fileArr = [];
+            for (let i=0; i < board.photos.length; i++) {
+                const photo = board.photos[i];
+                this.dataURLtoFile(
+                    photo.file_download_uri,
+                    photo.original_file_name,
+                    photo.extension
+                ).then(file => fileArr[i] = file)
+            }
+            thisItem.files = fileArr;
+            document.getElementById("textArea").value = thisItem.content;
+
+            let base64Arr = [];
+            for (let i = 0; i < board.photos.length; i++) {
+                base64Arr[i] = board.photos[i].file_download_uri;
+            }
+            thisItem.filesBase64 = base64Arr;
+            this.setState({item: thisItem})
+        }
+    }
+
+    dataURLtoFile = async (dataURL, fileName, extension) => {
+        const response = await fetch(dataURL);
+        const data = await response.blob();
+        return new File([data], fileName, {type:`image/${extension}`});
     }
 
     categoryChangeHandler(event) {
@@ -87,24 +120,36 @@ class UploadBoard extends React.Component {
 
 
     onButtonClick = () => {
-        uploadBoard(this.state.item);
-        this.setState({
-            item: {
-                title: "",
-                content: "",
-                price: "",
-                categoryNumber: 0,
-                files: "",
-            },
-        });
-        window.location.href = "/"
+        if (typeof this.props.location == 'undefined') {
+            uploadBoard(this.state.item);
+            this.setState({
+                item: {
+                    title: "",
+                    content: "",
+                    price: "",
+                    categoryNumber: 0,
+                    files: "",
+                },
+            });
+
+            window.location.href = "/";
+        } else {
+            const id = this.props.location.state.id;
+            updateBoard(this.state.item, id);
+            this.props.history.goBack();
+        }
+    }
+
+    historyHandler = () => {
+        if (typeof this.props.history == 'undefined') window.location.href = "/";
+        else this.props.history.goBack();
     }
 
     render() {
         return (
-            <>
+            <ThemeProvider theme={theme}>
                 <Paper style={{margin: '3% 30% 0 30%', padding: 10}}>
-                    <Link href="/">
+                    <Link onClick={this.historyHandler}>
                         <Typography variant="body2" color="textPrimary" align="center">
                             뒤로 가기
                         </Typography>
@@ -121,7 +166,11 @@ class UploadBoard extends React.Component {
                                        inputProps={{style: {textAlign: 'center'}}}
                             />
                             <p/>
-                            <input type="file" id="files" multiple onChange={this.onInputFilesChange}/>
+                            <label className="input-file-button" form="files">
+                                업로드
+                                <input type="file" id="files" multiple onChange={this.onInputFilesChange}
+                                       style={{display: "none"}}/>
+                            </label>
                             <p/>
                             <Typography variant="body2" color="textSecondary" align="center" component={'span'}>
                                 <Carousel
@@ -154,15 +203,15 @@ class UploadBoard extends React.Component {
                                 </Carousel>
                             </Typography>
                             <p/>
-                            <textarea placeholder="content"
+                            <textarea placeholder={this.state.content}
                                       onChange={this.onInputContentChange}
                                       style={{
                                           width: '100%',
                                           height: '500px'
                                       }}
-                            />
+                                      id="textArea"/>
                             <p/>
-                            <TextField placeholder="Price"
+                            <TextField placeholder={this.state.price}
                                        fullWidth
                                        onChange={this.onInputPriceChange}
                                        value={this.state.item.price}
@@ -203,7 +252,7 @@ class UploadBoard extends React.Component {
                         </Grid>
                     </Grid>
                 </Paper>
-            </>
+            </ThemeProvider>
         );
     }
 }
