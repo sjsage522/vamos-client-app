@@ -4,29 +4,23 @@ import {ThemeProvider, unstable_createMuiStrictModeTheme} from "@material-ui/cor
 import Carousel from "react-material-ui-carousel";
 import {Link} from "react-router-dom";
 import {request} from "../../util/APIUtils";
-import LoadingPage from "../LoadingPage";
 
 const theme = unstable_createMuiStrictModeTheme();
 
 class BoardDetail extends React.Component {
     constructor(props) {
         super(props);
-        this.board = props.location.state;
         this.state = {
+            board: props.location.state,
             email: "",
-            loading: true,
         }
-        this._isMounted = false;
     }
 
 
     componentDidMount() {
-        this._isMounted = true;
-
         request("/user/me", "GET", null)
             .then((response) => response.json().then((json) => {
-                if (this._isMounted)
-                    this.setState({email: json.data.email, loading: false});
+                this.setState({email: json.data.email});
             }))
             .catch(response => {
                 if (response.status === 401) {
@@ -46,8 +40,8 @@ class BoardDetail extends React.Component {
     }
 
     render() {
-        const board = this.board;
-        let detail = (
+        let board = this.state.board;
+        return (
             <Paper style={{margin: '3% 20% 0 20%', padding: 10}}>
                 <Grid item xs={12} sm={12} md={12} key={board.id} container justifyContent="center">
                     <ThemeProvider theme={theme}>
@@ -154,11 +148,6 @@ class BoardDetail extends React.Component {
                 </Grid>
             </Paper>
         );
-
-        let content = LoadingPage();
-        if (!this.state.loading) content = detail;
-
-        return content;
     }
 }
 
