@@ -121,22 +121,27 @@ class UploadBoard extends React.Component {
 
     onButtonClick = () => {
         if (typeof this.props.location == 'undefined') {
-            uploadBoard(this.state.item);
-            this.setState({
-                item: {
-                    title: "",
-                    content: "",
-                    price: "",
-                    categoryNumber: 0,
-                    files: "",
-                },
-            });
-
-            window.location.href = "/";
+            uploadBoard(this.state.item)
+                .then(response => response.json().then((json) => {
+                    console.log(json)
+                    if (response.status === 400) {
+                        alert(json.error.message);
+                    } else {
+                        alert('업로드 완료!');
+                        window.location.href = "/";
+                    }
+                }));
         } else {
             const id = this.props.location.state.id;
-            updateBoard(this.state.item, id);
-            this.props.history.goBack();
+            updateBoard(this.state.item, id)
+                .then(response => response.json().then((json) => {
+                    if (response.status === 400) {
+                        alert(json.error.message);
+                    } else {
+                        alert('수정 완료!');
+                        window.location.href = "/";
+                    }
+                }));
         }
     }
 
@@ -203,7 +208,7 @@ class UploadBoard extends React.Component {
                                 </Carousel>
                             </Typography>
                             <p/>
-                            <textarea placeholder={this.state.content}
+                            <textarea placeholder={this.state.item.content}
                                       onChange={this.onInputContentChange}
                                       style={{
                                           width: '100%',
@@ -211,16 +216,17 @@ class UploadBoard extends React.Component {
                                       }}
                                       id="textArea"/>
                             <p/>
-                            <TextField placeholder={this.state.price}
-                                       fullWidth
-                                       onChange={this.onInputPriceChange}
-                                       value={this.state.item.price}
-                                       inputProps={{style: {textAlign: 'center'}}}
+                            <TextField
+                                fullWidth
+                                onChange={this.onInputPriceChange}
+                                value={this.state.item.price}
+                                inputProps={{style: {textAlign: 'center'}}}
                             />
                             <p/>
                             <FormControl fullWidth>
                                 <NativeSelect
-                                    value={CATEGORIES[this.state.categoryNumber]}
+                                    defaultValue={typeof this.props.location === 'undefined' ?
+                                        0 : this.props.location.state.category_info.id}
                                     onChange={this.categoryChangeHandler}
                                 >
                                     {
