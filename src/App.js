@@ -43,11 +43,15 @@ class App extends React.Component {
         );
 
         let navigationBar = (
-            <AppBar position="static" color="secondary">
+            <AppBar position="static" style={{
+                background: "#FF3366"
+            }}>
                 <Toolbar>
                     <Grid justifyContent="space-between" container>
                         <Grid item>
-                            <Typography variant="h6">
+                            <Typography variant="h6" style={{
+                                color: "white"
+                            }}>
                                 {this.state.items.length > 0 ?
                                     this.state.items[0].location.address_name : "VAMOS"}
                             </Typography>
@@ -77,7 +81,9 @@ class App extends React.Component {
                             </Button>
                         </Grid>
                         <Grid>
-                            <Button color="inherit" onClick={logout}>
+                            <Button color="inherit" onClick={logout} style={{
+                                color: "white"
+                            }}>
                                 로그아웃
                             </Button>
                         </Grid>

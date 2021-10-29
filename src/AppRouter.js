@@ -8,6 +8,7 @@ import Location from "./components/users/Location";
 import UploadBoard from "./components/boards/UploadBoard";
 import BoardDetail from "./components/boards/BoardDetail";
 import NotFound from "./components/NotFound";
+import ApplyComment from "./components/comments/ApplyComment";
 
 function CopyRight() {
     return (
@@ -38,6 +39,9 @@ class AppRouter extends React.Component {
                             <Route exact path="/upload">
                                 <UploadBoard/>
                             </Route>
+                            <Route exact path="/apply/comment"
+                                   component={ApplyComment}
+                            />
                             <Route exact path="/location">
                                 <Location/>
                             </Route>
