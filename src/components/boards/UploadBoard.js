@@ -1,9 +1,10 @@
 import React from "react";
 import Carousel from 'react-material-ui-carousel';
 import "./Board.css";
-import {Button, FormControl, Grid, Link, NativeSelect, Paper, TextField, Typography,} from "@material-ui/core";
+import {Button, FormControl, Grid, NativeSelect, Paper, TextField, Typography,} from "@material-ui/core";
 import {updateBoard, uploadBoard} from "../../util/APIUtils";
 import {ThemeProvider, unstable_createMuiStrictModeTheme} from "@material-ui/core/styles";
+import GoBackHistory from "../../util/GoBackHistory";
 
 const theme = unstable_createMuiStrictModeTheme();
 
@@ -144,21 +145,10 @@ class UploadBoard extends React.Component {
         }
     }
 
-    historyHandler = () => {
-        if (typeof this.props.history == 'undefined') window.location.href = "/";
-        else this.props.history.goBack();
-    }
-
     render() {
         return (
             <ThemeProvider theme={theme}>
-                <Paper style={{margin: '3% 30% 0 30%', padding: 10}}>
-                    <Link onClick={this.historyHandler}>
-                        <Typography variant="body2" color="textPrimary" align="center">
-                            뒤로 가기
-                        </Typography>
-                    </Link>
-                </Paper>
+                <GoBackHistory history={this.props.history}/>
                 <Paper style={{margin: '3% 30% 0 30%', padding: 50}}>
                     <Grid container>
                         <Grid xs={12} md={12} item style={{paddingRight: 10}}>
