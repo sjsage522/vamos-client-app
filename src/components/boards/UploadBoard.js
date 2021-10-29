@@ -123,7 +123,6 @@ class UploadBoard extends React.Component {
         if (typeof this.props.location == 'undefined') {
             uploadBoard(this.state.item)
                 .then(response => response.json().then((json) => {
-                    console.log(json)
                     if (response.status === 400) {
                         alert(json.error.message);
                     } else {

@@ -12,6 +12,7 @@ import Carousel from "react-material-ui-carousel";
 import {ThemeProvider} from "@material-ui/core/styles";
 import {unstable_createMuiStrictModeTheme} from '@material-ui/core/styles';
 import {NavLink} from "react-router-dom";
+import {getLastTime} from "../../util/TimeUtils";
 
 const theme = unstable_createMuiStrictModeTheme();
 
@@ -27,20 +28,7 @@ class Board extends React.Component {
         const board = this.state.item;
         const compare = new Date(board.created_at);
         const now = new Date() //현재시간
-        let result = Math.floor((now - compare) / 1000 / 60 / 60);
-        if (result > 24) { //24시간 이상
-            result = Math.floor(result / 24);
-            if (result > 7) { //7일 이상
-                result = `${compare.getFullYear()}. ${compare.getMonth() + 1} .${compare.getDay()}`
-                // ex) 2021. 10. 27
-            } else { //7일 이내
-                result = result + '일전' // ex) 5일전
-            }
-        } else if (result === 0) { //1시간 미만
-            result = Math.floor((now - compare) / 1000 / 60) + '분전';
-        } else { //1시간 이상 24시간 미만
-            result = result + '시간전';
-        }
+        const result = getLastTime(compare, now);
 
         return (
             <Grid container spacing={10} justifyContent="center">

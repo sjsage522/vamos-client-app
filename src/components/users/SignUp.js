@@ -41,7 +41,7 @@ class SignUp extends React.Component {
                                 autoComplete="fname"
                                 name="name"
                                 variant="outlined"
-                                required
+                               e required
                                 fullWidth
                                 id="name"
                                 label="사용자 이름"
