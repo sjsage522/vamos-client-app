@@ -1,5 +1,5 @@
 import React from "react";
-import {Button, CardActions, CardContent, Grid, hexToRgb, Paper, TextField, Typography} from "@material-ui/core";
+import {Button, CardActions, CardContent, Grid, Paper, TextField, Typography} from "@material-ui/core";
 import {ThemeProvider, unstable_createMuiStrictModeTheme} from "@material-ui/core/styles";
 import Carousel from "react-material-ui-carousel";
 import {Link, NavLink} from "react-router-dom";
