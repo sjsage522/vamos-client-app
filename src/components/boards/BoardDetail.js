@@ -4,8 +4,7 @@ import {ThemeProvider, unstable_createMuiStrictModeTheme} from "@material-ui/cor
 import Carousel from "react-material-ui-carousel";
 import {Link, NavLink} from "react-router-dom";
 import {request} from "../../util/APIUtils";
-import {getLastTime} from "../../util/TimeUtils";
-import noImage from "../../img/no-image.png";
+import Comment from "../comments/Comment";
 
 const theme = unstable_createMuiStrictModeTheme();
 
@@ -23,8 +22,8 @@ class BoardDetail extends React.Component {
     componentDidMount() {
         request("/user/me", "GET", null)
             .then((response) => response.json().then((json) => {
-                this.setState({email: json.data.email});
-                this.setComments();
+                const email = json.data.email
+                this.updateState(email);
             }))
             .catch(response => {
                 if (response.status === 401) {
@@ -33,10 +32,10 @@ class BoardDetail extends React.Component {
             });
     }
 
-    setComments() {
+    updateState(email) {
         request("/comments/board/" + this.state.board.id, "GET", null)
             .then((response) => (response.json()).then((json) => {
-                this.setState({comments: json, commentText: ""});
+                this.setState({comments: json, commentText: "", email: email});
             }))
     }
 
@@ -44,17 +43,6 @@ class BoardDetail extends React.Component {
         request("/board/" + id, "DELETE", null);
         alert("삭제 되었습니다.");
         window.location.href = "/";
-    }
-
-    deleteCommentHandler = (id) => {
-        request("/comment/" + id, "DELETE", null)
-            .then(() => {
-                alert("삭제 되었습니다.");
-                this.setComments();
-            })
-            .catch((response) => response.json().then((json) => {
-                alert(json.error.message);
-            }));
     }
 
     commentTextHandler = (event) => {
@@ -76,22 +64,16 @@ class BoardDetail extends React.Component {
             content
         })
             .then((response) => (response.json().then((json) => {
-                this.setComments();
+                this.updateState();
             })))
             .catch((response) => response.json().then((json) => {
                 alert(json.error.message);
             }));
     }
 
-    getCommentLastTime = (comment) => {
-        const compare = new Date(comment.created_at);
-        const now = new Date() //현재시간
-        return getLastTime(compare, now);
-    }
-
     render() {
-        let board = this.state.board;
-        let comments = this.state.comments.data;
+        const board = this.state.board;
+        const comments = this.state.comments.data;
 
         return (
             <>
@@ -228,137 +210,11 @@ class BoardDetail extends React.Component {
                         </form>
                     </CardActions>
                 </Paper>
-                <Paper style={{margin: '3% 20% 0 20%', padding: 10}}>
-                    {
-                        typeof comments !== 'undefined' && comments.length > 0 ?
-                            this.state.comments.data.map((comment) => (
-                                <div key={comment.comment_id}>
-                                    <Grid container>
-                                        <Grid style={{
-                                            marginLeft: "10px"
-                                        }}>
-                                            <Grid container>
-                                                <img src={comment.user_info.profile === null ?
-                                                    noImage : comment.user_info.profile
-                                                }
-                                                     alt="profile"
-                                                     style={{
-                                                         width: '25px',
-                                                         height: '25px',
-                                                         objectFit: 'cover',
-                                                         marginRight: '5px',
-                                                         borderRadius: '70%'
-                                                     }}
-                                                />
-                                                <Typography variant="h6" component="h2" gutterBottom>
-                                                    {comment.user_info.email}
-                                                    <Grid container>
-                                                        <Typography variant="subtitle2" color="textSecondary"
-                                                                    gutterBottom>
-                                                            {comment.user_info.location.addressName}
-                                                            <span> &#183;</span> {this.getCommentLastTime(comment)}
-                                                        </Typography>
-                                                    </Grid>
-                                                    <Grid container>
-                                                        <Typography variant="subtitle2">
-                                                            {comment.content}
-                                                        </Typography>
-                                                    </Grid>
-                                                </Typography>
-                                                <Grid container
-                                                      style={{
-                                                          marginLeft: "21px",
-                                                      }}
-                                                >
-                                                    <Link
-                                                        to={{
-                                                            pathname: `/apply/comment`,
-                                                            state: {
-                                                                comment,
-                                                                board
-                                                            },
-                                                        }}
-                                                        style={{
-                                                            textDecorationLine: 'none',
-                                                        }}
-                                                    >
-                                                        <Button size="small" color="secondary">
-                                                            답글쓰기
-                                                        </Button>
-                                                    </Link>
-                                                    {comment.user_info.email === this.state.email ?
-                                                        <Button size="small" color="secondary"
-                                                                onClick={() => this.deleteCommentHandler(comment.comment_id)}
-                                                        >
-                                                            삭제하기
-                                                        </Button> : null
-                                                    }
-                                                </Grid>
-                                                {
-                                                    comment.children.length > 0 ?
-                                                        comment.children.map((comment) => (
-                                                            <Grid container
-                                                                  key={comment.comment_id}
-                                                                  style={{
-                                                                      marginLeft: "29px",
-                                                                      marginBottom: "7px",
-                                                                      marginTop: "10px",
-                                                                  }}
-                                                            >
-                                                                <img src={comment.user_info.profile === null ?
-                                                                    noImage : comment.user_info.profile
-                                                                }
-                                                                     alt="profile"
-                                                                     style={{
-                                                                         width: '25px',
-                                                                         height: '25px',
-                                                                         objectFit: 'cover',
-                                                                         marginRight: '5px',
-                                                                         borderRadius: '70%'
-                                                                     }}
-                                                                />
-                                                                <Typography variant="caption" component="h2"
-                                                                            gutterBottom>
-                                                                    {comment.user_info.email}
-                                                                    <Grid container>
-                                                                        <Typography variant="subtitle2"
-                                                                                    color="textSecondary" gutterBottom>
-                                                                            {comment.user_info.location.addressName}
-                                                                            <span> &#183;</span> {this.getCommentLastTime(comment)}
-                                                                        </Typography>
-                                                                    </Grid>
-                                                                    <Grid container>
-                                                                        <Typography variant="subtitle2">
-                                                                            {comment.content}
-                                                                            {comment.user_info.email === this.state.email ?
-                                                                                <Button size="small" color="secondary"
-                                                                                        onClick={() => this.deleteCommentHandler(comment.comment_id)}
-                                                                                >
-                                                                                    삭제하기
-                                                                                </Button> : null
-                                                                            }
-                                                                        </Typography>
-                                                                    </Grid>
-                                                                </Typography>
-                                                            </Grid>
-                                                        ))
-                                                        : null
-                                                }
-                                            </Grid>
-                                        </Grid>
-                                    </Grid>
-                                    <hr style={{
-                                        align: "center",
-                                        borderColor: "whitesmoke",
-                                        marginBottom: "25px",
-                                    }}/>
-                                </div>
-                            )) :
-                            <Typography variant="subtitle2" color="textSecondary" align="center">
-                                댓글이 존재하지 않습니다.
-                            </Typography>
-                    }
-                </Paper>
+                <Comment comments={comments}
+                         board={board}
+                         email={this.state.email}
+                         update={this.updateState.bind(this)}
+                />
             </>
         );
     }
