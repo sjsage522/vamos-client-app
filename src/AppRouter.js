@@ -9,6 +9,8 @@ import UploadBoard from "./components/boards/UploadBoard";
 import BoardDetail from "./components/boards/BoardDetail";
 import NotFound from "./components/NotFound";
 import ApplyComment from "./components/comments/ApplyComment";
+import ChatRoom from "./components/chats/ChatRoom";
+import ChatList from "./components/chats/ChatList";
 
 function CopyRight() {
     return (
@@ -42,8 +44,14 @@ class AppRouter extends React.Component {
                             <Route exact path="/apply/comment"
                                    component={ApplyComment}
                             />
+                            <Route exact path="/chat"
+                                   component={ChatRoom}
+                            />
                             <Route exact path="/location">
                                 <Location/>
+                            </Route>
+                            <Route exact path="/chatList">
+                                <ChatList/>
                             </Route>
                             <Route exact path="/login">
                                 <Login />

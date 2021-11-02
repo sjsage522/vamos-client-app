@@ -13,7 +13,7 @@ class BoardDetail extends React.Component {
         super(props);
         this.state = {
             board: props.location.state,
-            email: "",
+            currentUser: {},
             comments: {},
             commentText: "",
         }
@@ -22,8 +22,8 @@ class BoardDetail extends React.Component {
     componentDidMount() {
         request("/user/me", "GET", null)
             .then((response) => response.json().then((json) => {
-                const email = json.data.email
-                this.updateState(email);
+                const currentUser = json.data
+                this.updateState(currentUser);
             }))
             .catch(response => {
                 if (response.status === 401) {
@@ -32,10 +32,10 @@ class BoardDetail extends React.Component {
             });
     }
 
-    updateState(email) {
+    updateState(user) {
         request("/comments/board/" + this.state.board.id, "GET", null)
             .then((response) => (response.json()).then((json) => {
-                this.setState({comments: json, commentText: "", email: email});
+                this.setState({comments: json, commentText: "", currentUser: user});
             }))
     }
 
@@ -71,8 +71,13 @@ class BoardDetail extends React.Component {
             }));
     }
 
+    getCurrentUserEmail() {
+        return this.state.currentUser.email;
+    }
+
     render() {
         const board = this.state.board;
+        const currentUser = this.state.currentUser;
         const comments = this.state.comments.data;
 
         return (
@@ -148,7 +153,27 @@ class BoardDetail extends React.Component {
                                         </Button>
                                     </NavLink>
                                     {
-                                        board.user_info.email === this.state.email ?
+                                        board.user_info.email !== this.getCurrentUserEmail() ?
+                                            <NavLink
+                                                to={{
+                                                    pathname: "/chat",
+                                                    state: {
+                                                        board,
+                                                        currentUser,
+                                                    }
+                                                }}
+                                                style={{
+                                                    textDecorationLine: 'none',
+                                                }}
+                                            >
+                                                <Button size="medium" color="secondary">
+                                                    거래하기
+                                                </Button>
+                                            </NavLink>
+                                            : null
+                                    }
+                                    {
+                                        board.user_info.email === this.getCurrentUserEmail() ?
                                             <Link
                                                 to={{
                                                     pathname: `/update/board/${board.id}`,
@@ -165,7 +190,7 @@ class BoardDetail extends React.Component {
                                             : null
                                     }
                                     {
-                                        board.user_info.email === this.state.email ?
+                                        board.user_info.email === this.getCurrentUserEmail() ?
                                             <Button size="medium"
                                                     color="secondary"
                                                     onClick={() => this.deleteBoardHandler(board.id)}
@@ -212,7 +237,7 @@ class BoardDetail extends React.Component {
                 </Paper>
                 <Comment comments={comments}
                          board={board}
-                         email={this.state.email}
+                         currentUser={this.state.currentUser}
                          update={this.updateState.bind(this)}
                 />
             </>

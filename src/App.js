@@ -79,6 +79,16 @@ class App extends React.Component {
                                     위치 설정하기
                                 </NavLink>
                             </Button>
+                            <Button>
+                                <NavLink to="/chatList"
+                                         style={{
+                                             textDecorationLine: 'none',
+                                             color: 'white'
+                                         }}
+                                >
+                                    채팅방관리
+                                </NavLink>
+                            </Button>
                         </Grid>
                         <Grid>
                             <Button color="inherit" onClick={logout} style={{

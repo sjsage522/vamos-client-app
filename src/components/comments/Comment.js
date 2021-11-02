@@ -16,7 +16,7 @@ class Comment extends React.Component {
         request("/comment/" + id, "DELETE", null)
             .then(() => {
                 alert("삭제 되었습니다.");
-                this.props.update(this.props.board.id);
+                this.props.update();
             })
             .catch((response) => response.json().then((json) => {
                 alert(json.error.message);
@@ -26,7 +26,7 @@ class Comment extends React.Component {
     render() {
         const comments = this.props.comments;
         const board = this.props.board;
-        const email = this.props.email;
+        const email = this.props.currentUser.email;
 
         return (
             <Paper style={{margin: '3% 20% 0 20%', padding: 10}}>
