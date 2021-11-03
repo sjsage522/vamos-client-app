@@ -11,6 +11,7 @@ class ChatRoom extends React.Component {
         super(props);
         this.boardId = props.location.state.board.id;
         this.currentUser = props.location.state.currentUser;
+        this.buyerId = props.location.state.buyerId;
         this.state = {
             roomId: "",
             seller: {},
@@ -18,11 +19,12 @@ class ChatRoom extends React.Component {
             contents: [],
             submitContent: "",
         }
+        console.log(this.currentUser)
     }
 
     componentDidMount() {
         const init = async () => {
-            const chatRoomResponse = await request("/chat/" + this.boardId, "GET", null);
+            const chatRoomResponse = await request("/chat/" + this.boardId + "/" + this.buyerId, "GET", null);
             const chatInfoJson = await chatRoomResponse.json();
             if (chatInfoJson.data.chatting_info === null) alert("채팅방이 생성되었습니다!");
 

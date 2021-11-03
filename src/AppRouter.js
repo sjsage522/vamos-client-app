@@ -44,7 +44,7 @@ class AppRouter extends React.Component {
                             <Route exact path="/apply/comment"
                                    component={ApplyComment}
                             />
-                            <Route exact path="/chat"
+                            <Route exact path="/chat/:id"
                                    component={ChatRoom}
                             />
                             <Route exact path="/location">

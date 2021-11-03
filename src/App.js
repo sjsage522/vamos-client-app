@@ -13,23 +13,38 @@ class App extends React.Component {
             items: [],
             loading: true,
             addressName: "",
+            currentUser: {},
         }
     }
 
     // main page => 현재 위치 기준으로 모든 게시글 조회
     componentDidMount() {
-        request("/boards", "GET", null)
-            .then((response) => response.json().then((json) => {
-                this.setState({items: json.data.sort(function (item1, item2) {
-                        return item2.id - item1.id;
-                    }), loading: false})
-            }))
+
+        const process = async () => {
+            const boardListResponse = await request("/boards", "GET", null);
+            const boardListJson = await boardListResponse.json();
+
+            const currentUserResponse = await request("/user/me", "GET", null);
+            const currentUserJson = await currentUserResponse.json();
+
+            this.setState({
+                items: boardListJson.data.sort(function (item1, item2) {
+                    return item2.id - item1.id;
+                }),
+                loading: false,
+                currentUser: currentUserJson.data,
+            })
+
+            console.log(this.state.currentUser);
+        }
+        process()
             .catch((response) => {
-                response.json().then((json) => {
-                    if (json.error.status === 400) window.location.href = "/Location"
-                    else if (json.error.status === 401) window.location.href = "/Login"
-                })
-            });
+            response.json().then((json) => {
+                if (json.error.status === 400) window.location.href = "/Location"
+                else if (json.error.status === 401) window.location.href = "/Login"
+            })
+        })
+            .catch(console.log);
     }
 
     render() {
@@ -54,6 +69,13 @@ class App extends React.Component {
                             }}>
                                 {this.state.items.length > 0 ?
                                     this.state.items[0].location.address_name : "VAMOS"}
+                            </Typography>
+                        </Grid>
+                        <Grid>
+                            <Typography variant="overline" style={{
+                                color: "white"
+                            }}>
+                                안녕하세요 {this.state.currentUser.email} 님!
                             </Typography>
                         </Grid>
                         <Grid>
@@ -86,7 +108,7 @@ class App extends React.Component {
                                              color: 'white'
                                          }}
                                 >
-                                    채팅방관리
+                                    채팅
                                 </NavLink>
                             </Button>
                         </Grid>

@@ -39,6 +39,11 @@ class BoardDetail extends React.Component {
             }))
     }
 
+    historyHandler = () => {
+        if (typeof this.props.history == 'undefined') window.location.href = "/";
+        else this.props.history.goBack();
+    }
+
     deleteBoardHandler = (id) => {
         request("/board/" + id, "DELETE", null);
         alert("삭제 되었습니다.");
@@ -79,7 +84,7 @@ class BoardDetail extends React.Component {
         const board = this.state.board;
         const currentUser = this.state.currentUser;
         const comments = this.state.comments.data;
-
+        console.log("board", board);
         return (
             <>
                 <Paper style={{margin: '3% 20% 0 20%', padding: 10}}>
@@ -140,26 +145,18 @@ class BoardDetail extends React.Component {
                             </Grid>
                             <Grid>
                                 <CardActions>
-                                    <NavLink
-                                        to={{
-                                            pathname: "/",
-                                        }}
-                                        style={{
-                                            textDecorationLine: 'none',
-                                        }}
-                                    >
-                                        <Button size="medium" color="secondary">
-                                            돌아가기
-                                        </Button>
-                                    </NavLink>
+                                    <Button size="medium" color="secondary" onClick={this.historyHandler}>
+                                        돌아가기
+                                    </Button>
                                     {
                                         board.user_info.email !== this.getCurrentUserEmail() ?
                                             <NavLink
                                                 to={{
-                                                    pathname: "/chat",
+                                                    pathname: `/chat/${board.id}`,
                                                     state: {
                                                         board,
                                                         currentUser,
+                                                        buyerId: currentUser.id,
                                                     }
                                                 }}
                                                 style={{
