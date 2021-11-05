@@ -19,7 +19,6 @@ class ChatRoom extends React.Component {
             contents: [],
             submitContent: "",
         }
-        console.log(this.currentUser)
     }
 
     componentDidMount() {
@@ -84,7 +83,9 @@ class ChatRoom extends React.Component {
     }
 
     render() {
-        const contents = this.state.contents;
+        const contents = this.state.contents.sort(function (c1, c2) {
+            return c1.id - c2.id;
+        });
         const topic = "/topic/" + this.state.roomId + "/queue/messages";
 
         return (

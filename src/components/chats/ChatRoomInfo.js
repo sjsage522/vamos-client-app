@@ -4,14 +4,13 @@ import {NavLink} from "react-router-dom";
 import {TrendingFlat} from "@material-ui/icons";
 import {getLastTime} from "../../util/TimeUtils";
 
-class ChatInfo extends React.Component {
+class ChatRoomInfo extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             item: props.item,
             currentUser: props.currentUser,
         }
-        console.log("p", props)
     }
 
     render() {
@@ -20,9 +19,6 @@ class ChatInfo extends React.Component {
         const now = new Date();
         const result = getLastTime(compare, now);
 
-        console.log("info", info)
-        console.log("buyer", info.buyer)
-        console.log("currentUser", this.state.currentUser)
         return (
             <Grid container spacing={10} justifyContent="center">
                 <Grid item xs={12} sm={12} md={12}>
@@ -87,4 +83,4 @@ class ChatInfo extends React.Component {
     }
 }
 
-export default ChatInfo;
+export default ChatRoomInfo;

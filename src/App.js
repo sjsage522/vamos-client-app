@@ -34,8 +34,6 @@ class App extends React.Component {
                 loading: false,
                 currentUser: currentUserJson.data,
             })
-
-            console.log(this.state.currentUser);
         }
         process()
             .catch((response) => {
