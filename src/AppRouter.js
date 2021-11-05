@@ -11,6 +11,7 @@ import NotFound from "./components/NotFound";
 import ApplyComment from "./components/comments/ApplyComment";
 import ChatRoom from "./components/chats/ChatRoom";
 import ChatRoomList from "./components/chats/ChatRoomList";
+import UpdateInfo from "./components/users/UpdateInfo";
 
 function CopyRight() {
     return (
@@ -49,6 +50,9 @@ class AppRouter extends React.Component {
                             />
                             <Route exact path="/location">
                                 <Location/>
+                            </Route>
+                            <Route exact path="/update/user/info">
+                                <UpdateInfo/>
                             </Route>
                             <Route exact path="/chatList">
                                 <ChatRoomList/>

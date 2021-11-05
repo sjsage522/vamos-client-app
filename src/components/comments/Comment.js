@@ -52,7 +52,7 @@ class Comment extends React.Component {
                                                  }}
                                             />
                                             <Typography variant="h6" component="h2" gutterBottom>
-                                                {comment.user_info.email}
+                                                {comment.user_info.nickname}
                                                 <Grid container>
                                                     <Typography variant="subtitle2" color="textSecondary"
                                                                 gutterBottom>
@@ -120,7 +120,7 @@ class Comment extends React.Component {
                                                             />
                                                             <Typography variant="caption" component="h2"
                                                                         gutterBottom>
-                                                                {comment.user_info.email}
+                                                                {comment.user_info.nickname}
                                                                 <Grid container>
                                                                     <Typography variant="subtitle2"
                                                                                 color="textSecondary" gutterBottom>

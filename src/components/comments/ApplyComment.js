@@ -67,7 +67,7 @@ class ApplyComment extends React.Component {
                              }}
                         />
                         <Typography variant="h5" component="h2" gutterBottom>
-                            {comment.user_info.email}
+                            {comment.user_info.nickname}
                         </Typography>
                     </Grid>
                     <Grid container>

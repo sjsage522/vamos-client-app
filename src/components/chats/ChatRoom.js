@@ -94,7 +94,7 @@ class ChatRoom extends React.Component {
                 <GoBackHistory history={this.props.history}/>
                 <Paper style={{margin: '3% 20% 0 20%', backgroundColor: 'lightpink'}}>
                     <Grid container justifyContent="center" style={{fontSize: '30px', color: 'white'}}>
-                        {this.state.seller.email + " 채팅방"}
+                        {this.state.seller.nickname + " 채팅방"}
                     </Grid>
                 </Paper>
                 <Paper style={{margin: '3px 20% 0 20%', padding: 10, backgroundColor: 'pink'}}>

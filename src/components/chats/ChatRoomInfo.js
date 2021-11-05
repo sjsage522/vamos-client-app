@@ -3,6 +3,7 @@ import {Button, Card, CardActions, CardContent, Grid, Typography} from "@materia
 import {NavLink} from "react-router-dom";
 import {TrendingFlat} from "@material-ui/icons";
 import {getLastTime} from "../../util/TimeUtils";
+import {request} from "../../util/APIUtils";
 
 class ChatRoomInfo extends React.Component {
     constructor(props) {
@@ -10,7 +11,22 @@ class ChatRoomInfo extends React.Component {
         this.state = {
             item: props.item,
             currentUser: props.currentUser,
+            buyerNickname: "",
         }
+    }
+
+    componentDidMount() {
+        const buyerId = this.state.item.buyer;
+
+        const process = async () => {
+            const userResponse = await request("/user/" + buyerId, "GET", null);
+            const userJson = await userResponse.json();
+
+            this.setState({
+                buyerNickname: userJson.data.nickname,
+            })
+        }
+        process().catch(console.log)
     }
 
     render() {
@@ -18,6 +34,7 @@ class ChatRoomInfo extends React.Component {
         const compare = new Date(info.created_at);
         const now = new Date();
         const result = getLastTime(compare, now);
+        const buyerNickname = this.state.buyerNickname;
 
         return (
             <Grid container spacing={10} justifyContent="center">
@@ -42,6 +59,9 @@ class ChatRoomInfo extends React.Component {
                             </Typography>
                             <Typography variant="body1" component="p">
                                 상태 : {info.board_info.status}
+                            </Typography>
+                            <Typography variant="body1" component="p">
+                                구매자 : {buyerNickname}
                             </Typography>
                         </CardContent>
                         <CardActions style={{justifyContent: "center"}}>
