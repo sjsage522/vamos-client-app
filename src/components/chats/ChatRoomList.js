@@ -43,7 +43,7 @@ class ChatRoomList extends React.Component {
                 <GoBackHistory history={this.props.history}/>
                 <Paper style={{margin: '3% 30% 0 30%', padding: 50}}>
                     {
-                        sellerChatRoomInfos.length > 0 ?   <Grid container justifyContent="center">
+                        sellerChatRoomInfos.length > 0 ? <Grid container justifyContent="center">
                             <Typography variant="h5" component="h2" gutterBottom color="secondary">
                                 거래 요청이 왔어요!
                             </Typography>
@@ -52,12 +52,9 @@ class ChatRoomList extends React.Component {
                     {
                         sellerChatRoomInfos.length > 0 ? sellerChatRoomInfos.map((chatInfo) => {
                             return (
-                                <>
-                                    <p/>
-                                    <ChatRoomInfo item={chatInfo}
-                                                  currentUser={currentUser}
-                                                  key={chatInfo.id}/>
-                                </>
+                                <ChatRoomInfo item={chatInfo}
+                                              currentUser={currentUser}
+                                              key={chatInfo.id}/>
                             );
                         }) : <Grid container
                                    justifyContent="center"
@@ -78,12 +75,9 @@ class ChatRoomList extends React.Component {
                     {
                         buyerChatRoomInfos.length > 0 ? buyerChatRoomInfos.map((chatInfo) => {
                             return (
-                                <>
-                                    <p/>
-                                    <ChatRoomInfo item={chatInfo}
-                                                  currentUser={currentUser}
-                                                  key={chatInfo.id}/>
-                                </>
+                                <ChatRoomInfo item={chatInfo}
+                                              currentUser={currentUser}
+                                              key={chatInfo.id}/>
                             );
                         }) : <Grid container
                                    justifyContent="center"
