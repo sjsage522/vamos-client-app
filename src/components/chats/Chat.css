@@ -8,6 +8,7 @@
     font-family: arial;
     position: relative;
     border-radius: 10px;
+    word-break: break-all;
 }
 
 .box2 {
