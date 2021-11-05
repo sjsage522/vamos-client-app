@@ -7,6 +7,15 @@
   pointer-events: none;
 }
 
+.search {
+  left: 0; right: 0;
+  width: 270px;
+  height: 27px;
+  border: none;
+  background: darkgrey;
+  border-radius: 20px;
+}
+
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;

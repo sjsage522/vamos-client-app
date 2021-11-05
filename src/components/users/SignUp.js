@@ -1,6 +1,8 @@
 import React from "react";
 import {Button, Container, Grid, TextField, Typography, Link} from "@material-ui/core";
 import {signup} from "../../util/APIUtils";
+import icon from "../../img/icon.png";
+import Footer from "../Footer";
 
 class SignUp extends React.Component {
     constructor(props) {
@@ -28,12 +30,14 @@ class SignUp extends React.Component {
 
     render() {
         return (
+            <div style={{padding:"87px", background:"#EDFBF7"}}>
             <Container component="main" maxWidth="xs" style={{ marginTop: "8%" }}>
-                <form noValidate onSubmit={this.handleSubmit}>
+                <form noValidate onSubmit={this.handleSubmit} >
                     <Grid container spacing={2}>
                         <Grid item xs={12}>
-                            <Typography component="h1" variant="h5">
-                                계정 생성
+
+                            <Typography component="h1" variant="h5" align="left">
+                                <img width="35%" src={icon} align="right" />    회원 가입
                             </Typography>
                         </Grid>
                         <Grid item xs={12}>
@@ -76,21 +80,23 @@ class SignUp extends React.Component {
                                 type="submit"
                                 fullWidth
                                 variant="contained"
-                                color="primary"
+                                style={{backgroundColor : "#479F8A", color: "white"}}
                             >
                                 계정 생성
                             </Button>
                         </Grid>
                     </Grid>
-                    <Grid container justifyContent="flex-end">
-                        <Grid item>
-                            <Link href="/login" variant="body2">
+                    <Grid container justifyContent="flex-end" >
+                        <Grid item style={{marginTop:"2%"}}>
+                            <Link href="/login" variant="body2" style={{marginTop:"2%", color:"#DC2222"}} >
                                 이미 계정이 있습니까? 로그인 하세요.
                             </Link>
                         </Grid>
                     </Grid>
                 </form>
             </Container>
+                <Footer/>
+            </div>
         );
     }
 }

@@ -5,6 +5,10 @@ import {AppBar, Button, Container, Grid, Toolbar, Typography} from "@material-ui
 import LoadingPage from "./components/LoadingPage";
 import Board from "./components/boards/Board";
 import {NavLink} from "react-router-dom";
+import icon from "./img/icon.png";
+import {BiCurrentLocation} from "react-icons/bi";
+import FooterMain from "./components/FooterMain";
+
 
 class App extends React.Component {
     constructor(props) {
@@ -44,14 +48,16 @@ class App extends React.Component {
 
         let navigationBar = (
             <AppBar position="static" style={{
-                background: "#FF3366"
+                background: "#EDFBF7"
             }}>
                 <Toolbar>
                     <Grid justifyContent="space-between" container>
                         <Grid item>
-                            <Typography variant="h6" style={{
-                                color: "white"
-                            }}>
+                            <img width="17%" src={icon} align='left'  />
+                            <Typography variant="body1" style={{
+                                color: "black",
+                                marginTop:'1%'
+                            }}> <BiCurrentLocation style={{marginRight:'1%'}}/>
                                 {this.state.items.length > 0 ?
                                     this.state.items[0].location.address_name : "VAMOS"}
                             </Typography>
@@ -63,7 +69,7 @@ class App extends React.Component {
                                 }}
                                          style={{
                                              textDecorationLine: 'none',
-                                             color: 'white'
+                                             color: 'black'
                                          }}
                                 >
                                     게시글 작성하기
@@ -73,7 +79,7 @@ class App extends React.Component {
                                 <NavLink to="/location"
                                          style={{
                                              textDecorationLine: 'none',
-                                             color: 'white'
+                                             color: 'black'
                                          }}
                                 >
                                     위치 설정하기
@@ -82,7 +88,7 @@ class App extends React.Component {
                         </Grid>
                         <Grid>
                             <Button color="inherit" onClick={logout} style={{
-                                color: "white"
+                                color: "black"
                             }}>
                                 로그아웃
                             </Button>
@@ -108,6 +114,7 @@ class App extends React.Component {
         return (
             <div className="App">
                 {content}
+            <FooterMain/>
             </div>
         );
     }

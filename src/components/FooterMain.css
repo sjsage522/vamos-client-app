@@ -1,0 +1,32 @@
+.main{
+    justify-content: center;
+    width:100%;
+
+}
+.main_content {
+    display :flex;
+    justify-content: center;
+    margin-top: 10px;
+}
+.content1 {
+    display: grid;
+    justify-content: left;
+    font-weight: bold;
+    margin-top: 3px;
+}
+
+.content2 {
+    padding-left : 350px;
+    font-weight: bold;
+}
+
+.content3{
+    padding-left : 130px;
+    font-weight: bold;
+}
+.content4 {
+    margin-top: 3px;
+}
+.content5 {
+    margin-top: 3px;
+}

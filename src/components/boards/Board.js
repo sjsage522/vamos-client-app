@@ -1,7 +1,7 @@
 import React from "react";
 import {
     Button,
-    Card,
+    Card, CardActionArea,
     CardActions,
     CardContent,
     Grid,

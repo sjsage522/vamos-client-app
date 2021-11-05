@@ -10,14 +10,29 @@ import BoardDetail from "./components/boards/BoardDetail";
 import NotFound from "./components/NotFound";
 import ApplyComment from "./components/comments/ApplyComment";
 
+
 function CopyRight() {
     return (
+        <Box mt={2} bottom={0} height={150} style={{backgroundColor:"#EDFBF7"}}>
         <Typography variant="body2" color="textSecondary" align="center">
             {"CopyRight © "}
             sjsage522, {new Date().getFullYear()}
             {"."}
         </Typography>
+        </Box>
     );
+}
+
+function CopyRight1() {
+    return (
+        <Box mt={2} bottom={0} height={150} style={{backgroundColor:"#EFEDE6"}}>
+        <Typography variant="body2" color="textSecondary" align="center">
+            {"CopyRight © "}
+            sjsage522, {new Date().getFullYear()}
+            {"."}
+        </Typography>
+        </Box>
+    )
 }
 
 class AppRouter extends React.Component {
@@ -54,9 +69,7 @@ class AppRouter extends React.Component {
                             <Route component={NotFound}/>
                         </Switch>
                     </div>
-                    <Box mt={5}>
-                        <CopyRight/>
-                    </Box>
+
                 </Router>
             </div>
         );
