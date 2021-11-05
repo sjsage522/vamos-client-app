@@ -83,9 +83,10 @@ class ChatRoom extends React.Component {
     }
 
     render() {
-        const contents = this.state.contents.sort(function (c1, c2) {
-            return c1.id - c2.id;
-        });
+        const contents = (this.state.contents !== null ?
+            this.state.contents.sort(function (c1, c2) {
+                return c1.id - c2.id;
+            }) : null);
         const topic = "/topic/" + this.state.roomId + "/queue/messages";
 
         return (
@@ -170,7 +171,9 @@ class ChatRoom extends React.Component {
                                 variant="contained"
                                 type="submit"
                                 color="secondary"
-                                ref={el => {this.messageEnd = el;}}
+                                ref={el => {
+                                    this.messageEnd = el;
+                                }}
                         >
                             전송
                         </Button>
