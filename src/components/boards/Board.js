@@ -5,6 +5,7 @@ import {
     CardActions,
     CardContent,
     Grid,
+    Box,
     Typography
 } from "@material-ui/core";
 import {TrendingFlat} from "@material-ui/icons";
@@ -13,6 +14,7 @@ import {ThemeProvider} from "@material-ui/core/styles";
 import {unstable_createMuiStrictModeTheme} from '@material-ui/core/styles';
 import {NavLink} from "react-router-dom";
 import {getLastTime} from "../../util/TimeUtils";
+
 
 const theme = unstable_createMuiStrictModeTheme();
 
@@ -31,7 +33,7 @@ class Board extends React.Component {
         const result = getLastTime(compare, now);
 
         return (
-            <Grid container spacing={10} justifyContent="center">
+            <Grid spacing={10} justifyContent="center" style={{marginRight:'3%', marginBottom:'3%'}}>
                 <Grid item xs={12} sm={12} md={12} key={board.id}>
                     <Card>
                         <Grid style={{
@@ -61,8 +63,8 @@ class Board extends React.Component {
                                                 src={image.file_download_uri}
                                                 alt="First slide"
                                                 style={{
-                                                    width: "200px",
-                                                    height: "200px",
+                                                    width: "300px",
+                                                    height: "250px",
                                                     border: "3px solid pink",
                                                     borderRadius: "16px"
                                                 }}
@@ -102,6 +104,7 @@ class Board extends React.Component {
                     </Card>
                 </Grid>
             </Grid>
+
         );
     }
 }

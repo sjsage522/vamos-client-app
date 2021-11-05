@@ -1,11 +1,12 @@
 import React from "react";
-import {Button, CardActions, CardContent, Grid, hexToRgb, Paper, TextField, Typography} from "@material-ui/core";
+import {Button, CardActions, CardContent, Grid, Paper, TextField, Typography} from "@material-ui/core";
 import {ThemeProvider, unstable_createMuiStrictModeTheme} from "@material-ui/core/styles";
 import Carousel from "react-material-ui-carousel";
 import {Link, NavLink} from "react-router-dom";
 import {request} from "../../util/APIUtils";
-import {getLastTime} from "../../util/TimeUtils";
-import noImage from "../../img/no-image.png";
+import Comment from "../comments/Comment";
+import {BiTrash,BiArrowFromRight} from "react-icons/bi";
+import FooterMain from "../FooterMain";
 
 const theme = unstable_createMuiStrictModeTheme();
 
@@ -14,7 +15,7 @@ class BoardDetail extends React.Component {
         super(props);
         this.state = {
             board: props.location.state,
-            email: "",
+            currentUser: {},
             comments: {},
             commentText: "",
         }
@@ -23,8 +24,8 @@ class BoardDetail extends React.Component {
     componentDidMount() {
         request("/user/me", "GET", null)
             .then((response) => response.json().then((json) => {
-                this.setState({email: json.data.email});
-                this.setComments();
+                const currentUser = json.data
+                this.updateState(currentUser);
             }))
             .catch(response => {
                 if (response.status === 401) {
@@ -33,28 +34,22 @@ class BoardDetail extends React.Component {
             });
     }
 
-    setComments() {
+    updateState(user) {
         request("/comments/board/" + this.state.board.id, "GET", null)
             .then((response) => (response.json()).then((json) => {
-                this.setState({comments: json, commentText: ""});
+                this.setState({comments: json, commentText: "", currentUser: user});
             }))
+    }
+
+    historyHandler = () => {
+        if (typeof this.props.history == 'undefined') window.location.href = "/";
+        else this.props.history.goBack();
     }
 
     deleteBoardHandler = (id) => {
         request("/board/" + id, "DELETE", null);
         alert("삭제 되었습니다.");
         window.location.href = "/";
-    }
-
-    deleteCommentHandler = (id) => {
-        request("/comment/" + id, "DELETE", null)
-            .then(() => {
-                alert("삭제 되었습니다.");
-                this.setComments();
-            })
-            .catch((response) => response.json().then((json) => {
-                alert(json.error.message);
-            }));
     }
 
     commentTextHandler = (event) => {
@@ -76,25 +71,25 @@ class BoardDetail extends React.Component {
             content
         })
             .then((response) => (response.json().then((json) => {
-                this.setComments();
+                this.updateState();
             })))
             .catch((response) => response.json().then((json) => {
                 alert(json.error.message);
             }));
     }
 
-    getCommentLastTime = (comment) => {
-        const compare = new Date(comment.created_at);
-        const now = new Date() //현재시간
-        return getLastTime(compare, now);
+    getCurrentUserEmail() {
+        return this.state.currentUser.email;
     }
 
     render() {
-        let board = this.state.board;
-        let comments = this.state.comments.data;
-
+        const board = this.state.board;
+        const currentUser = this.state.currentUser;
+        const comments = this.state.comments.data;
+        console.log("board", board);
         return (
             <>
+            <div style={{padding :'110px',background:'#F6F6F6'}}>
                 <Paper style={{margin: '3% 20% 0 20%', padding: 10}}>
                     <Grid item xs={12} sm={12} md={12} key={board.id} container justifyContent="center">
                         <ThemeProvider theme={theme}>
@@ -117,8 +112,8 @@ class BoardDetail extends React.Component {
                                                     src={image.file_download_uri}
                                                     alt="First slide"
                                                     style={{
-                                                        width: "200px",
-                                                        height: "200px",
+                                                        width: "300px",
+                                                        height: "350px",
                                                         border: "3px solid pink",
                                                         borderRadius: "16px",
                                                     }}
@@ -153,20 +148,32 @@ class BoardDetail extends React.Component {
                             </Grid>
                             <Grid>
                                 <CardActions>
-                                    <NavLink
-                                        to={{
-                                            pathname: "/",
-                                        }}
-                                        style={{
-                                            textDecorationLine: 'none',
-                                        }}
-                                    >
-                                        <Button size="medium" color="secondary">
-                                            돌아가기
-                                        </Button>
-                                    </NavLink>
+                                    <Button size="medium" color="secondary" onClick={this.historyHandler}>
+                                        <BiArrowFromRight size={20} /> 돌아가기
+                                    </Button>
                                     {
-                                        board.user_info.email === this.state.email ?
+                                        board.user_info.email !== this.getCurrentUserEmail() ?
+                                            <NavLink
+                                                to={{
+                                                    pathname: `/chat/${board.id}`,
+                                                    state: {
+                                                        board,
+                                                        currentUser,
+                                                        buyerId: currentUser.id,
+                                                    }
+                                                }}
+                                                style={{
+                                                    textDecorationLine: 'none',
+                                                }}
+                                            >
+                                                <Button size="medium" color="secondary">
+                                                    거래하기
+                                                </Button>
+                                            </NavLink>
+                                            : null
+                                    }
+                                    {
+                                        board.user_info.email === this.getCurrentUserEmail() ?
                                             <Link
                                                 to={{
                                                     pathname: `/update/board/${board.id}`,
@@ -183,12 +190,12 @@ class BoardDetail extends React.Component {
                                             : null
                                     }
                                     {
-                                        board.user_info.email === this.state.email ?
+                                        board.user_info.email === this.getCurrentUserEmail() ?
                                             <Button size="medium"
                                                     color="secondary"
                                                     onClick={() => this.deleteBoardHandler(board.id)}
                                             >
-                                                삭제하기
+                                                삭제하기<BiTrash/>
                                             </Button>
                                             : null
                                     }
@@ -198,7 +205,7 @@ class BoardDetail extends React.Component {
                         </ThemeProvider>
                     </Grid>
                 </Paper>
-                <Paper style={{margin: '3% 20% 0 20%', padding: 10}}>
+                <Paper style={{margin: '3% 20% 0 20%', padding: 10, background:"#EDFBF7"}}>
                     <CardActions style={{justifyContent: 'center'}}>
                         <form noValidate onSubmit={this.handleSubmitComment}>
                             <Grid container>
@@ -212,14 +219,15 @@ class BoardDetail extends React.Component {
                                     multiline
                                     value={this.state.commentText}
                                     onChange={this.commentTextHandler}
+                                    style={{background:"white"}}
                                 />
                                 <Button
                                     type="submit"
                                     variant="outlined"
-                                    color="primary"
                                     size="small"
                                     style={{
-                                        marginLeft: "10px"
+                                        marginLeft: "10px",
+                                        color:"#DC2222"
                                     }}
                                 >
                                     등록
@@ -228,137 +236,13 @@ class BoardDetail extends React.Component {
                         </form>
                     </CardActions>
                 </Paper>
-                <Paper style={{margin: '3% 20% 0 20%', padding: 10}}>
-                    {
-                        typeof comments !== 'undefined' && comments.length > 0 ?
-                            this.state.comments.data.map((comment) => (
-                                <div key={comment.comment_id}>
-                                    <Grid container>
-                                        <Grid style={{
-                                            marginLeft: "10px"
-                                        }}>
-                                            <Grid container>
-                                                <img src={comment.user_info.profile === null ?
-                                                    noImage : comment.user_info.profile
-                                                }
-                                                     alt="profile"
-                                                     style={{
-                                                         width: '25px',
-                                                         height: '25px',
-                                                         objectFit: 'cover',
-                                                         marginRight: '5px',
-                                                         borderRadius: '70%'
-                                                     }}
-                                                />
-                                                <Typography variant="h6" component="h2" gutterBottom>
-                                                    {comment.user_info.email}
-                                                    <Grid container>
-                                                        <Typography variant="subtitle2" color="textSecondary"
-                                                                    gutterBottom>
-                                                            {comment.user_info.location.addressName}
-                                                            <span> &#183;</span> {this.getCommentLastTime(comment)}
-                                                        </Typography>
-                                                    </Grid>
-                                                    <Grid container>
-                                                        <Typography variant="subtitle2">
-                                                            {comment.content}
-                                                        </Typography>
-                                                    </Grid>
-                                                </Typography>
-                                                <Grid container
-                                                      style={{
-                                                          marginLeft: "21px",
-                                                      }}
-                                                >
-                                                    <Link
-                                                        to={{
-                                                            pathname: `/apply/comment`,
-                                                            state: {
-                                                                comment,
-                                                                board
-                                                            },
-                                                        }}
-                                                        style={{
-                                                            textDecorationLine: 'none',
-                                                        }}
-                                                    >
-                                                        <Button size="small" color="secondary">
-                                                            답글쓰기
-                                                        </Button>
-                                                    </Link>
-                                                    {comment.user_info.email === this.state.email ?
-                                                        <Button size="small" color="secondary"
-                                                                onClick={() => this.deleteCommentHandler(comment.comment_id)}
-                                                        >
-                                                            삭제하기
-                                                        </Button> : null
-                                                    }
-                                                </Grid>
-                                                {
-                                                    comment.children.length > 0 ?
-                                                        comment.children.map((comment) => (
-                                                            <Grid container
-                                                                  key={comment.comment_id}
-                                                                  style={{
-                                                                      marginLeft: "29px",
-                                                                      marginBottom: "7px",
-                                                                      marginTop: "10px",
-                                                                  }}
-                                                            >
-                                                                <img src={comment.user_info.profile === null ?
-                                                                    noImage : comment.user_info.profile
-                                                                }
-                                                                     alt="profile"
-                                                                     style={{
-                                                                         width: '25px',
-                                                                         height: '25px',
-                                                                         objectFit: 'cover',
-                                                                         marginRight: '5px',
-                                                                         borderRadius: '70%'
-                                                                     }}
-                                                                />
-                                                                <Typography variant="caption" component="h2"
-                                                                            gutterBottom>
-                                                                    {comment.user_info.email}
-                                                                    <Grid container>
-                                                                        <Typography variant="subtitle2"
-                                                                                    color="textSecondary" gutterBottom>
-                                                                            {comment.user_info.location.addressName}
-                                                                            <span> &#183;</span> {this.getCommentLastTime(comment)}
-                                                                        </Typography>
-                                                                    </Grid>
-                                                                    <Grid container>
-                                                                        <Typography variant="subtitle2">
-                                                                            {comment.content}
-                                                                            {comment.user_info.email === this.state.email ?
-                                                                                <Button size="small" color="secondary"
-                                                                                        onClick={() => this.deleteCommentHandler(comment.comment_id)}
-                                                                                >
-                                                                                    삭제하기
-                                                                                </Button> : null
-                                                                            }
-                                                                        </Typography>
-                                                                    </Grid>
-                                                                </Typography>
-                                                            </Grid>
-                                                        ))
-                                                        : null
-                                                }
-                                            </Grid>
-                                        </Grid>
-                                    </Grid>
-                                    <hr style={{
-                                        align: "center",
-                                        borderColor: "whitesmoke",
-                                        marginBottom: "25px",
-                                    }}/>
-                                </div>
-                            )) :
-                            <Typography variant="subtitle2" color="textSecondary" align="center">
-                                댓글이 존재하지 않습니다.
-                            </Typography>
-                    }
-                </Paper>
+                <Comment comments={comments}
+                         board={board}
+                         currentUser={this.state.currentUser}
+                         update={this.updateState.bind(this)}
+                />
+            </div>
+                <FooterMain/>
             </>
         );
     }

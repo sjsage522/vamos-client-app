@@ -1,7 +1,7 @@
 import React from "react";
 import './App.css';
 import {logout, request} from "./util/APIUtils";
-import {AppBar, Button, Container, Grid, Toolbar, Typography} from "@material-ui/core";
+import {AppBar, Button, Container, Grid, Toolbar, Typography, Box} from "@material-ui/core";
 import LoadingPage from "./components/LoadingPage";
 import Board from "./components/boards/Board";
 import {NavLink} from "react-router-dom";
@@ -17,23 +17,38 @@ class App extends React.Component {
             items: [],
             loading: true,
             addressName: "",
+            currentUser: {},
         }
     }
 
     // main page => 현재 위치 기준으로 모든 게시글 조회
     componentDidMount() {
-        request("/boards", "GET", null)
-            .then((response) => response.json().then((json) => {
-                this.setState({items: json.data.sort(function (item1, item2) {
-                        return item2.id - item1.id;
-                    }), loading: false})
-            }))
+
+        const process = async () => {
+            const boardListResponse = await request("/boards", "GET", null);
+            const boardListJson = await boardListResponse.json();
+
+            const currentUserResponse = await request("/user/me", "GET", null);
+            const currentUserJson = await currentUserResponse.json();
+
+            this.setState({
+                items: boardListJson.data.sort(function (item1, item2) {
+                    return item2.id - item1.id;
+                }),
+                loading: false,
+                currentUser: currentUserJson.data,
+            })
+
+            console.log(this.state.currentUser);
+        }
+        process()
             .catch((response) => {
-                response.json().then((json) => {
-                    if (json.error.status === 400) window.location.href = "/Location"
-                    else if (json.error.status === 401) window.location.href = "/Login"
-                })
-            });
+            response.json().then((json) => {
+                if (json.error.status === 400) window.location.href = "/Location"
+                else if (json.error.status === 401) window.location.href = "/Login"
+            })
+        })
+            .catch(console.log);
     }
 
     render() {
@@ -63,6 +78,13 @@ class App extends React.Component {
                             </Typography>
                         </Grid>
                         <Grid>
+                            <Typography variant="overline" style={{
+                                color: "black"
+                            }}>
+                                안녕하세요 {this.state.currentUser.email} 님!
+                            </Typography>
+                        </Grid>
+                        <Grid>
                             <Button>
                                 <NavLink to={{
                                     pathname: "/upload",
@@ -85,6 +107,16 @@ class App extends React.Component {
                                     위치 설정하기
                                 </NavLink>
                             </Button>
+                            <Button>
+                                <NavLink to="/chatList"
+                                         style={{
+                                             textDecorationLine: 'none',
+                                             color: '#55C2A9'
+                                         }}
+                                >
+                                    채팅
+                                </NavLink>
+                            </Button>
                         </Grid>
                         <Grid>
                             <Button color="inherit" onClick={logout} style={{
@@ -102,7 +134,7 @@ class App extends React.Component {
             <div>
                 {navigationBar}
                 <p/>
-                <Container maxWidth="md">
+                <Container  >
                     <div className="boardList">{boards}</div>
                 </Container>
             </div>

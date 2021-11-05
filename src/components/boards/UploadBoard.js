@@ -6,6 +6,7 @@ import {updateBoard, uploadBoard} from "../../util/APIUtils";
 import {ThemeProvider, unstable_createMuiStrictModeTheme} from "@material-ui/core/styles";
 import GoBackHistory from "../../util/GoBackHistory";
 import {BiImageAdd} from "react-icons/bi";
+import FooterMain from "../FooterMain";
 
 
 const theme = unstable_createMuiStrictModeTheme();
@@ -65,7 +66,7 @@ class UploadBoard extends React.Component {
     }
 
     dataURLtoFile = async (dataURL, fileName, extension) => {
-        const response = await fetch(dataURL);
+        const response = await fetch('https://cors-anywhere.herokuapp.com/' + dataURL);
         const data = await response.blob();
         return new File([data], fileName, {type:`image/${extension}`});
     }
@@ -149,6 +150,7 @@ class UploadBoard extends React.Component {
 
     render() {
         return (
+            <>
             <ThemeProvider theme={theme}>
                 <GoBackHistory history={this.props.history}/>
                 <Paper style={{margin: '3% 30% 0 23%', padding: 50, width:650}}>
@@ -250,6 +252,8 @@ class UploadBoard extends React.Component {
                     </Grid>
                 </Paper>
             </ThemeProvider>
+                <FooterMain/>
+            </>
         );
     }
 }

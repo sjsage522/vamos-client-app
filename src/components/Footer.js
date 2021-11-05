@@ -14,6 +14,7 @@ const Footer = () => {
             </Typography>
         </Box>
         </div>
+
     );
 };
 
