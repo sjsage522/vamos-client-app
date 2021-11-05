@@ -38,14 +38,13 @@ class App extends React.Component {
                 loading: false,
                 currentUser: currentUserJson.data,
             })
-
-            console.log(this.state.currentUser);
         }
         process()
             .catch((response) => {
             response.json().then((json) => {
-                if (json.error.status === 400) window.location.href = "/Location"
-                else if (json.error.status === 401) window.location.href = "/Login"
+                if (json.error.code === "U002") window.location.href = "/update/user/info"
+                else if (json.error.code === "U003") window.location.href = "/location"
+                else if (json.error.status === 401) window.location.href = "/login"
             })
         })
             .catch(console.log);
@@ -81,7 +80,7 @@ class App extends React.Component {
                             <Typography variant="overline" style={{
                                 color: "black"
                             }}>
-                                안녕하세요 {this.state.currentUser.email} 님!
+                                안녕하세요 {this.state.currentUser.nickname} 님!
                             </Typography>
                         </Grid>
                         <Grid>

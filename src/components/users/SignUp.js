@@ -14,10 +14,10 @@ class SignUp extends React.Component {
         event.preventDefault();
 
         const data = new FormData(event.target);
-        const name = data.get("name");
+        const nickname = data.get("nickname");
         const email = data.get("email");
         const password = data.get("password");
-        signup({email, name, password})
+        signup({email, nickname, password})
             .then((response) => {
                     window.location.href = "/login";
                 }
@@ -43,12 +43,12 @@ class SignUp extends React.Component {
                         <Grid item xs={12}>
                             <TextField
                                 autoComplete="fname"
-                                name="name"
+                                name="nickname"
                                 variant="outlined"
-                               e required
+                                required
                                 fullWidth
-                                id="name"
-                                label="사용자 이름"
+                                id="nickname"
+                                label="사용자 별명"
                                 autoFocus
                             />
                         </Grid>

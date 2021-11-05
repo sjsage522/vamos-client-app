@@ -86,7 +86,7 @@ class BoardDetail extends React.Component {
         const board = this.state.board;
         const currentUser = this.state.currentUser;
         const comments = this.state.comments.data;
-        console.log("board", board);
+
         return (
             <>
             <div style={{padding :'110px',background:'#F6F6F6'}}>
@@ -138,7 +138,7 @@ class BoardDetail extends React.Component {
                                         거래가격 : <span style={{color: 'navy'}}>&nbsp;{board.price}</span>
                                     </Grid>
                                     <Grid justifyContent="flex-end" container>
-                                        작성자 : <span style={{color: 'hotpink'}}>&nbsp;{board.user_info.email}</span>
+                                        작성자 : <span style={{color: 'hotpink'}}>&nbsp;{board.user_info.nickname}</span>
                                     </Grid>
                                     <hr/>
                                     <Typography variant="body2" component="p">

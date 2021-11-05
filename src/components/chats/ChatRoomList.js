@@ -1,10 +1,10 @@
 import React from 'react';
 import {request} from "../../util/APIUtils";
 import GoBackHistory from "../../util/GoBackHistory";
-import ChatInfo from "./ChatInfo";
+import ChatRoomInfo from "./ChatRoomInfo";
 import {Grid, Paper, Typography} from "@material-ui/core";
 
-class ChatList extends React.Component {
+class ChatRoomList extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -24,8 +24,6 @@ class ChatList extends React.Component {
 
             const buyerChatRoomResponse = await request("/buyer/chatRooms", "GET", null);
             const buyerChatRoomJson = await buyerChatRoomResponse.json();
-
-            console.log(sellerChatRoomJson)
 
             this.setState({
                 currentUser: userJson.data,
@@ -56,9 +54,9 @@ class ChatList extends React.Component {
                             return (
                                 <>
                                     <p/>
-                                    <ChatInfo item={chatInfo}
-                                              currentUser={currentUser}
-                                              key={chatInfo.id}/>
+                                    <ChatRoomInfo item={chatInfo}
+                                                  currentUser={currentUser}
+                                                  key={chatInfo.id}/>
                                 </>
                             );
                         }) : <Grid container
@@ -82,9 +80,9 @@ class ChatList extends React.Component {
                             return (
                                 <>
                                     <p/>
-                                    <ChatInfo item={chatInfo}
-                                              currentUser={currentUser}
-                                              key={chatInfo.id}/>
+                                    <ChatRoomInfo item={chatInfo}
+                                                  currentUser={currentUser}
+                                                  key={chatInfo.id}/>
                                 </>
                             );
                         }) : <Grid container
@@ -100,4 +98,4 @@ class ChatList extends React.Component {
     }
 }
 
-export default ChatList;
+export default ChatRoomList;

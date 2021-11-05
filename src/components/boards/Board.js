@@ -78,6 +78,9 @@ class Board extends React.Component {
                             <Typography variant="subtitle2" color="textSecondary" gutterBottom>
                                 {board.category_info.category_name[0]}
                             </Typography>
+                            <Typography variant="subtitle2" color="textSecondary" gutterBottom>
+                                {board.status}
+                            </Typography>
                             <Typography variant="h5" component="h2" gutterBottom>
                                 {board.title}
                             </Typography>

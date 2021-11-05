@@ -3,15 +3,30 @@ import {Button, Card, CardActions, CardContent, Grid, Typography} from "@materia
 import {NavLink} from "react-router-dom";
 import {TrendingFlat} from "@material-ui/icons";
 import {getLastTime} from "../../util/TimeUtils";
+import {request} from "../../util/APIUtils";
 
-class ChatInfo extends React.Component {
+class ChatRoomInfo extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             item: props.item,
             currentUser: props.currentUser,
+            buyerNickname: "",
         }
-        console.log("p", props)
+    }
+
+    componentDidMount() {
+        const buyerId = this.state.item.buyer;
+
+        const process = async () => {
+            const userResponse = await request("/user/" + buyerId, "GET", null);
+            const userJson = await userResponse.json();
+
+            this.setState({
+                buyerNickname: userJson.data.nickname,
+            })
+        }
+        process().catch(console.log)
     }
 
     render() {
@@ -19,10 +34,8 @@ class ChatInfo extends React.Component {
         const compare = new Date(info.created_at);
         const now = new Date();
         const result = getLastTime(compare, now);
+        const buyerNickname = this.state.buyerNickname;
 
-        console.log("info", info)
-        console.log("buyer", info.buyer)
-        console.log("currentUser", this.state.currentUser)
         return (
             <Grid container spacing={10} justifyContent="center">
                 <Grid item xs={12} sm={12} md={12}>
@@ -46,6 +59,9 @@ class ChatInfo extends React.Component {
                             </Typography>
                             <Typography variant="body1" component="p">
                                 상태 : {info.board_info.status}
+                            </Typography>
+                            <Typography variant="body1" component="p">
+                                구매자 : {buyerNickname}
                             </Typography>
                         </CardContent>
                         <CardActions style={{justifyContent: "center"}}>
@@ -87,4 +103,4 @@ class ChatInfo extends React.Component {
     }
 }
 
-export default ChatInfo;
+export default ChatRoomInfo;

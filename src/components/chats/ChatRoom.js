@@ -19,7 +19,6 @@ class ChatRoom extends React.Component {
             contents: [],
             submitContent: "",
         }
-        console.log(this.currentUser)
     }
 
     componentDidMount() {
@@ -93,9 +92,10 @@ class ChatRoom extends React.Component {
         return (
             <>
                 <GoBackHistory history={this.props.history}/>
-                <Paper style={{margin: '3% 20% 0 20%', backgroundColor: 'darkgrey'}}>
-                    <Grid container justifyContent="flex-end" style={{fontSize: '20px', color: 'white'}}>
-                        {this.state.seller.email + " 채팅방"}
+
+                <Paper style={{margin: '3% 20% 0 20%', backgroundColor: 'lightpink'}}>
+                    <Grid container justifyContent="center" style={{fontSize: '30px', color: 'white'}}>
+                        {this.state.seller.nickname + " 채팅방"}
                     </Grid>
                 </Paper>
                 <Paper style={{margin: '3px 20% 0 20%', padding: 10, backgroundColor: '#EDFBF7'}}>

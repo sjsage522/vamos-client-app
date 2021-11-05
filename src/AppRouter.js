@@ -10,7 +10,8 @@ import BoardDetail from "./components/boards/BoardDetail";
 import NotFound from "./components/NotFound";
 import ApplyComment from "./components/comments/ApplyComment";
 import ChatRoom from "./components/chats/ChatRoom";
-import ChatList from "./components/chats/ChatList";
+import ChatRoomList from "./components/chats/ChatRoomList";
+import UpdateInfo from "./components/users/UpdateInfo";
 
 
 function CopyRight() {
@@ -65,8 +66,11 @@ class AppRouter extends React.Component {
                             <Route exact path="/location">
                                 <Location/>
                             </Route>
+                            <Route exact path="/update/user/info">
+                                <UpdateInfo/>
+                            </Route>
                             <Route exact path="/chatList">
-                                <ChatList/>
+                                <ChatRoomList/>
                             </Route>
                             <Route exact path="/login">
                                 <Login />
