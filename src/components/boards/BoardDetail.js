@@ -69,7 +69,7 @@ class BoardDetail extends React.Component {
             content
         })
             .then((response) => (response.json().then((json) => {
-                this.updateState();
+                this.updateState(json.data.user_info);
             })))
             .catch((response) => response.json().then((json) => {
                 alert(json.error.message);
