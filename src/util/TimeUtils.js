@@ -3,7 +3,7 @@ export function getLastTime(compare, now) {
     if (result > 24) { //24시간 이상
         result = Math.floor(result / 24);
         if (result > 7) { //7일 이상
-            result = `${compare.getFullYear()}. ${compare.getMonth() + 1} .${compare.getDay()}`
+            result = `${compare.getFullYear()}. ${compare.getMonth()+1} .${compare.getDate()}`
             // ex) 2021. 10. 27
         } else { //7일 이내
             result = result + '일전' // ex) 5일전
