@@ -33,7 +33,9 @@ class Board extends React.Component {
         const result = getLastTime(compare, now);
 
         return (
-            <Grid spacing={10} justifyContent="center" style={{marginRight:'3%', marginBottom:'3%'}}>
+            <Grid spacing={10}
+                  justifyContent="center"
+                  style={{marginRight:'3%', marginBottom:'3%'}}>
                 <Grid item xs={12} sm={12} md={12} key={board.id}>
                     <Card>
                         <Grid style={{
