@@ -7,12 +7,13 @@ import {
     Grid,
     Typography
 } from "@material-ui/core";
-import {TrendingFlat} from "@material-ui/icons";
+import {TrendingFlat, Chat} from "@material-ui/icons";
 import Carousel from "react-material-ui-carousel";
 import {ThemeProvider} from "@material-ui/core/styles";
 import {unstable_createMuiStrictModeTheme} from '@material-ui/core/styles';
 import {NavLink} from "react-router-dom";
 import {getLastTime} from "../../util/TimeUtils";
+import {request} from "../../util/APIUtils";
 
 const theme = unstable_createMuiStrictModeTheme();
 
@@ -21,11 +22,25 @@ class Board extends React.Component {
         super(props);
         this.state = {
             item: props.item,
+            chatRoomCount: 0,
         };
+    }
+
+    componentDidMount() {
+        const process = async () => {
+            const response = await request("/chatRooms/board/" + this.state.item.id, "GET", null);
+            const json = await response.json();
+
+            this.setState({
+                chatRoomCount: json.data,
+            })
+        }
+        process().catch(console.log)
     }
 
     render() {
         const board = this.state.item;
+        const chatRoomCount = this.state.chatRoomCount;
         const compare = new Date(board.created_at);
         const now = new Date() //현재시간
         const result = getLastTime(compare, now);
@@ -78,6 +93,8 @@ class Board extends React.Component {
                             </Typography>
                             <Typography variant="subtitle2" color="textSecondary" gutterBottom>
                                 {board.status}
+                                <br/>
+                                {chatRoomCount}<Chat/>
                             </Typography>
                             <Typography variant="h5" component="h2" gutterBottom>
                                 {board.title}
