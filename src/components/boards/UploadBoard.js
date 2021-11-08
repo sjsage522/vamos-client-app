@@ -42,7 +42,7 @@ class UploadBoard extends React.Component {
             thisItem.categoryNumber = board.category_info.id;
 
             let fileArr = [];
-            for (let i=0; i < board.photos.length; i++) {
+            for (let i = 0; i < board.photos.length; i++) {
                 const photo = board.photos[i];
                 this.dataURLtoFile(
                     photo.file_download_uri,
@@ -65,7 +65,7 @@ class UploadBoard extends React.Component {
     dataURLtoFile = async (dataURL, fileName, extension) => {
         const response = await fetch(dataURL);
         const data = await response.blob();
-        return new File([data], fileName, {type:`image/${extension}`});
+        return new File([data], fileName, {type: `image/${extension}`});
     }
 
     categoryChangeHandler(event) {
@@ -205,12 +205,19 @@ class UploadBoard extends React.Component {
                                       }}
                                       id="textArea"/>
                             <p/>
-                            <TextField
-                                fullWidth
-                                onChange={this.onInputPriceChange}
-                                value={this.state.item.price}
-                                inputProps={{style: {textAlign: 'center'}}}
-                            />
+                            <Grid container>
+                                <TextField
+                                    style={{
+                                        width: '97%',
+                                    }}
+                                    onChange={this.onInputPriceChange}
+                                    value={this.state.item.price}
+                                    inputProps={{style: {textAlign: 'center'}}}
+                                />
+                                <Typography variant="h6" color="textSecondary" gutterBottom>
+                                    원
+                                </Typography>
+                            </Grid>
                             <p/>
                             <FormControl fullWidth>
                                 <NativeSelect
