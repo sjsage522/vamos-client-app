@@ -63,6 +63,8 @@ class UploadBoard extends React.Component {
     }
 
     dataURLtoFile = async (dataURL, fileName, extension) => {
+        const result = dataURL.split(":");
+        dataURL = 'http:' + result[1];
         const response = await fetch(dataURL);
         const data = await response.blob();
         return new File([data], fileName, {type: `image/${extension}`});
