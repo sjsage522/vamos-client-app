@@ -1,6 +1,6 @@
 import {Link, Paper, Typography, Container} from "@material-ui/core";
 import React from "react";
-import {BiLeftArrowAlt} from  "react-icons/bi";
+import {BiLeftArrowAlt,BiHome} from  "react-icons/bi";
 
 class GoBackHistory extends React.Component {
 
@@ -22,7 +22,7 @@ class GoBackHistory extends React.Component {
             <Paper style={{margin: '3% 30% 0 30%', padding: 10}}>
                 <Link onClick={this.historyHandler}>
                     <Typography variant="body2" color="textPrimary" align="center">
-                        <BiLeftArrowAlt/> 뒤로 가기
+                        <BiLeftArrowAlt/> 메인으로 <BiHome/>
                     </Typography>
                 </Link>
             </Paper>

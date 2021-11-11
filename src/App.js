@@ -67,7 +67,7 @@ class App extends React.Component {
                 <Toolbar>
                     <Grid justifyContent="space-between" container>
                         <Grid item>
-                            <img width="17%" src={icon} align='left'  />
+                            <img width="17%" src={icon} align='left' style={{marginLeft:'5%'}}  />
                             <Typography variant="body1" style={{
                                 color: "black",
                                 marginTop:'1%'
@@ -76,15 +76,9 @@ class App extends React.Component {
                                     this.state.items[0].location.address_name : "VAMOS"}
                             </Typography>
                         </Grid>
-                        <Grid>
-                            <Typography variant="overline" style={{
-                                color: "black"
-                            }}>
-                                안녕하세요 {this.state.currentUser.nickname} 님!
-                            </Typography>
-                        </Grid>
-                        <Grid>
-                            <Button>
+                        <div  className="headButton">
+                        <Grid >
+                            <Button >
                                 <NavLink to={{
                                     pathname: "/upload",
                                 }}
@@ -117,11 +111,19 @@ class App extends React.Component {
                                 </NavLink>
                             </Button>
                         </Grid>
+                        </div>
+
                         <Grid>
+                            <Typography variant="overline" style={{
+                                color: "black",
+                                marginTop:"5px"
+                            }}>
+                                안녕하세요 {this.state.currentUser.nickname} 님!
+                            </Typography>
                             <Button color="inherit" onClick={logout} style={{
                                 color: "black"
                             }}>
-                                로그아웃
+                                / <a style={{marginLeft:'5px'}}></a>로그아웃
                             </Button>
                         </Grid>
                     </Grid>

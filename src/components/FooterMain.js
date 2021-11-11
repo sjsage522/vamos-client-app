@@ -5,7 +5,7 @@ import "../components/FooterMain.css"
 
 const FooterMain = () => {
     return (
-    <Box mt={2} bottom={0} height={150} style={{backgroundColor:"darkgrey"}}>
+    <Box bottom={0} height={150} style={{backgroundColor:"darkgrey"}}>
         <div className="main">
             <div className="main_content">
                 <img width="250px" height="70px" src={icon2} align="left" style={{marginTop:'3%'}}/>

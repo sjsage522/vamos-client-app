@@ -3,6 +3,8 @@ import {request} from "../../util/APIUtils";
 import GoBackHistory from "../../util/GoBackHistory";
 import ChatRoomInfo from "./ChatRoomInfo";
 import {Grid, Paper, Typography} from "@material-ui/core";
+import "./Chat.css";
+import FooterMain from "../FooterMain";
 
 class ChatRoomList extends React.Component {
     constructor(props) {
@@ -40,8 +42,10 @@ class ChatRoomList extends React.Component {
         const currentUser = this.state.currentUser;
         return (
             <>
+            <div style={{padding :'2px',background:'#F6F6F6'}}>
                 <GoBackHistory history={this.props.history}/>
-                <Paper style={{margin: '3% 30% 0 30%', padding: 50}}>
+                <div className="chatList">
+                <Paper style={{margin: '3% 5% 2% 15%', padding: 90}}>
                     {
                         sellerChatRoomInfos.length > 0 ? <Grid container justifyContent="center">
                             <Typography variant="h5" component="h2" gutterBottom color="secondary">
@@ -64,11 +68,11 @@ class ChatRoomList extends React.Component {
                         </Grid>
                     }
                 </Paper>
-                <Paper style={{margin: '3% 30% 0 30%', padding: 50}}>
+                <Paper style={{margin: '3% 0 2% 0', padding: 100}}>
                     {
                         buyerChatRoomInfos.length > 0 ? <Grid container justifyContent="center">
                             <Typography variant="h5" component="h2" gutterBottom color="secondary">
-                                요청 목록 입니다!
+                                요청한 목록 입니다!
                             </Typography>
                         </Grid> : null
                     }
@@ -87,6 +91,9 @@ class ChatRoomList extends React.Component {
                         </Grid>
                     }
                 </Paper>
+                </div>
+            </div>
+                <FooterMain/>
             </>
         );
     }

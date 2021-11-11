@@ -89,8 +89,8 @@ class BoardDetail extends React.Component {
 
         return (
             <>
-            <div style={{padding :'110px',background:'#F6F6F6'}}>
-                <Paper style={{margin: '3% 20% 0 20%', padding: 10}}>
+            <div style={{padding :'160px',background:'#F6F6F6'}}>
+                <Paper style={{margin: '3% 20% 0 20%', padding: 70}}>
                     <Grid item xs={12} sm={12} md={12} key={board.id} container justifyContent="center">
                         <ThemeProvider theme={theme}>
                             <Grid>
@@ -112,8 +112,8 @@ class BoardDetail extends React.Component {
                                                     src={image.file_download_uri}
                                                     alt="First slide"
                                                     style={{
-                                                        width: "300px",
-                                                        height: "350px",
+                                                        width: "350px",
+                                                        height: "300px",
                                                         border: "3px solid pink",
                                                         borderRadius: "16px",
                                                     }}
@@ -135,7 +135,7 @@ class BoardDetail extends React.Component {
                                 </CardContent>
                                 <CardContent>
                                     <Grid justifyContent="flex-end" container>
-                                        거래가격 : <span style={{color: 'navy'}}>&nbsp;{board.price}</span>
+                                        거래가격 : <span style={{color: 'navy'}}>&nbsp;{board.price}</span> 원
                                     </Grid>
                                     <Grid justifyContent="flex-end" container>
                                         작성자 : <span style={{color: 'hotpink'}}>&nbsp;{board.user_info.nickname}</span>
