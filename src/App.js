@@ -2,7 +2,7 @@ import React from "react";
 import './App.css';
 import {logout, request} from "./util/APIUtils";
 import {AppBar, Button, Container, Grid, Toolbar, Typography} from "@material-ui/core";
-import LoadingPage from "./components/LoadingPage";
+import LoadingPage from "./components/etc/LoadingPage";
 import Board from "./components/boards/Board";
 import {NavLink} from "react-router-dom";
 
