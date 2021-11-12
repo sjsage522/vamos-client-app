@@ -77,6 +77,14 @@ class ChatRoomInfo extends React.Component {
                                 style={{
                                     textDecorationLine: 'none',
                                 }}
+                                target={"_blank"}
+                                onClick={() => {
+                                    const id = info.board_info.id;
+                                    localStorage.setItem("id", id);
+                                    localStorage.setItem("boardId" + id, info.board_info.id)
+                                    localStorage.setItem("currentUser" + id, JSON.stringify(this.state.currentUser))
+                                    localStorage.setItem("buyerId" + id, info.buyer)
+                                }}
                             >
                                 <Button size="small" color="secondary">
                                     참여하기<TrendingFlat/>
