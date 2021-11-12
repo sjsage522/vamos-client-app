@@ -159,6 +159,14 @@ class BoardDetail extends React.Component {
                                                         buyerId: currentUser.id,
                                                     }
                                                 }}
+                                                target={"_blank"}
+                                                onClick={() => {
+                                                    const id = board.id;
+                                                    localStorage.setItem("id", id);
+                                                    localStorage.setItem("boardId" + id, board.id)
+                                                    localStorage.setItem("currentUser" + id, JSON.stringify(currentUser))
+                                                    localStorage.setItem("buyerId" + id, currentUser.id)
+                                                }}
                                                 style={{
                                                     textDecorationLine: 'none',
                                                 }}

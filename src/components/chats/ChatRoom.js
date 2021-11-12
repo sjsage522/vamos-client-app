@@ -4,7 +4,6 @@ import {Button, Grid, Paper} from "@material-ui/core";
 import "./Chat.css";
 import {API_BASE_URL} from "../../config/AppConfig";
 import SockJsClient from "react-stomp";
-import GoBackHistory from "../../util/GoBackHistory";
 
 class ChatRoom extends React.Component {
     constructor(props) {
