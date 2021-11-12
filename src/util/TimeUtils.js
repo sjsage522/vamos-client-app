@@ -1,5 +1,5 @@
 export function getLastTime(compare, now) {
-    let result = Math.floor((now - compare) / 1000 / 60 / 60);
+    let result = parseInt((now - compare) / 1000 / 60 / 60);
     if (result > 24) { //24시간 이상
         result = Math.floor(result / 24);
         if (result > 7) { //7일 이상
@@ -9,7 +9,8 @@ export function getLastTime(compare, now) {
             result = result + '일전' // ex) 5일전
         }
     } else if (result === 0) { //1시간 미만
-        result = Math.floor((now - compare) / 1000 / 60) + '분전';
+        if (parseInt((now - compare) / 1000 / 60) === 0) result = '지금';
+        else result = Math.floor((now - compare) / 1000 / 60) + '분전';
     } else { //1시간 이상 24시간 미만
         result = result + '시간전';
     }
