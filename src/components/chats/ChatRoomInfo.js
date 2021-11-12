@@ -4,6 +4,7 @@ import {NavLink} from "react-router-dom";
 import {TrendingFlat} from "@material-ui/icons";
 import {getLastTime} from "../../util/TimeUtils";
 import {request} from "../../util/APIUtils";
+import {BiLike} from "react-icons/bi";
 
 class ChatRoomInfo extends React.Component {
     constructor(props) {
@@ -37,13 +38,15 @@ class ChatRoomInfo extends React.Component {
         const buyerNickname = this.state.buyerNickname;
 
         return (
+            <div >
             <Grid container spacing={10} justifyContent="center">
                 <Grid item xs={12} sm={12} md={12}>
                     <Card>
                         <Grid style={{
                             display: 'flex',
                             justifyContent: 'left',
-                            margin: '10px'
+                            margin: '10px',
+
                         }}>
                             {<span style={{color: 'grey', fontSize: '13px'}}>{result} 생성</span>}
                         </Grid>
@@ -87,7 +90,7 @@ class ChatRoomInfo extends React.Component {
                                 }}
                             >
                                 <Button size="small" color="secondary">
-                                    참여하기<TrendingFlat/>
+                                    참여하기<BiLike/>
                                 </Button>
                             </NavLink>
                             <NavLink
@@ -99,14 +102,15 @@ class ChatRoomInfo extends React.Component {
                                     textDecorationLine: 'none',
                                 }}
                             >
-                                <Button size="small" color="secondary">
-                                    더보기<TrendingFlat/>
+                                <Button variant="outlined" size="small" color="secondary">
+                                    상세보기
                                 </Button>
                             </NavLink>
                         </CardActions>
                     </Card>
                 </Grid>
             </Grid>
+            </div>
         );
     }
 }

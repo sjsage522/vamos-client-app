@@ -86,18 +86,18 @@ class ChatRoom extends React.Component {
     render() {
         const contents = (this.state.contents !== null ?
             this.state.contents.sort(function (c1, c2) {
-                return c1.id - c2.id;
-            }) : null);
+            return c1.id - c2.id;
+        }) : null);
         const topic = "/topic/" + this.state.roomId + "/queue/messages";
 
         return (
             <>
-                <Paper style={{margin: '3% 20% 0 20%', backgroundColor: 'lightpink'}}>
-                    <Grid container justifyContent="center" style={{fontSize: '30px', color: 'white'}}>
+                <Paper style={{margin: '3% 20% 0 20%', backgroundColor: 'darkgrey'}}>
+                    <Grid container justifyContent="flex-end" style={{fontSize: '23px', color: 'white'}}>
                         {this.state.seller.nickname + " 채팅방"}
                     </Grid>
                 </Paper>
-                <Paper style={{margin: '3px 20% 0 20%', padding: 10, backgroundColor: 'pink'}}>
+                <Paper style={{margin: '3px 20% 0 20%', padding: 10, backgroundColor: '#EDFBF7'}}>
                     {
                         (contents != null && contents.length > 0) ? contents.map((value) => {
                             const date = new Date(value.created_at);
@@ -170,10 +170,8 @@ class ChatRoom extends React.Component {
                                 onClick={this.sendMessage}
                                 variant="contained"
                                 type="submit"
-                                color="secondary"
-                                ref={el => {
-                                    this.messageEnd = el;
-                                }}
+                                ref={el => {this.messageEnd = el;}}
+                                style={{backgroundColor:"#DC2222", color:'white'}}
                         >
                             전송
                         </Button>

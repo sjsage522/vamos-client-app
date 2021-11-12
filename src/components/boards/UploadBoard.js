@@ -1,10 +1,13 @@
 import React from "react";
 import Carousel from 'react-material-ui-carousel';
 import "./Board.css";
-import {Button, FormControl, Grid, NativeSelect, Paper, TextField, Typography,} from "@material-ui/core";
+import {Button, Container, FormControl, Grid, NativeSelect, Paper, TextField, Typography,} from "@material-ui/core";
 import {updateBoard, uploadBoard} from "../../util/APIUtils";
 import {ThemeProvider, unstable_createMuiStrictModeTheme} from "@material-ui/core/styles";
 import GoBackHistory from "../../util/GoBackHistory";
+import {BiImageAdd, BiClipboard} from "react-icons/bi";
+import FooterMain from "../FooterMain";
+
 
 const theme = unstable_createMuiStrictModeTheme();
 
@@ -149,21 +152,29 @@ class UploadBoard extends React.Component {
 
     render() {
         return (
-            <ThemeProvider theme={theme}>
+            <>
+            <div style={{padding :'2px',background:'#F6F6F6'}}>
+            <ThemeProvider theme={theme} >
                 <GoBackHistory history={this.props.history}/>
-                <Paper style={{margin: '3% 30% 0 30%', padding: 50}}>
-                    <Grid container>
+                <Container style={{marginBottom: "5%"}}>
+                <Paper style={{margin: '3% 30% 0 25%', padding: 50, width:650}}>
+                    <Typography variant="h6" style={{textAlign:'center', marginBottom:'35px'}}>
+                       <BiClipboard style={{marginRight:'1px'}}/> 중고거래 물품 게시글</Typography>
+
+                    <Grid container align="center">
                         <Grid xs={12} md={12} item style={{paddingRight: 10}}>
-                            <TextField placeholder="Title"
+                            <TextField placeholder="제목을 입력해주세요"
                                        autoFocus
                                        fullWidth
                                        onChange={this.onInputTitleChange}
                                        value={this.state.item.title}
-                                       inputProps={{style: {textAlign: 'center'}}}
+                                       inputProps={{style: {textAlign: 'center' +
+                                                   ''}}}
                             />
                             <p/>
+                            <p/>
                             <label className="input-file-button" form="files">
-                                클릭
+                                <BiImageAdd size="21" style={{ color:"black", marginTop:"10px"}}/> 이미지 첨부
                                 <input type="file" id="files" multiple onChange={this.onInputFilesChange}
                                        style={{display: "none"}}/>
                             </label>
@@ -198,8 +209,7 @@ class UploadBoard extends React.Component {
                                     })}
                                 </Carousel>
                             </Typography>
-                            <p/>
-                            <textarea placeholder={this.state.item.content}
+                            <textarea placeholder="내용을 입력해주세요"
                                       onChange={this.onInputContentChange}
                                       style={{
                                           width: '100%',
@@ -210,7 +220,7 @@ class UploadBoard extends React.Component {
                             <Grid container>
                                 <TextField
                                     style={{
-                                        width: '97%',
+                                        width: '95%',
                                     }}
                                     onChange={this.onInputPriceChange}
                                     value={this.state.item.price}
@@ -247,15 +257,20 @@ class UploadBoard extends React.Component {
                                     fullWidth
                                     onClick={this.onButtonClick}
                                     variant="contained"
-                                    color="primary"
                                     type="submit"
+                                    style={{background:"#479F8A", color:"white", font:"bold"}}
                             >
-                                업로드 하기
+                                게시물 올리기
                             </Button>
                         </Grid>
                     </Grid>
                 </Paper>
+                </Container>
             </ThemeProvider>
+            </div>
+                <FooterMain/>
+
+            </>
         );
     }
 }

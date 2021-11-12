@@ -1,10 +1,11 @@
 import React from "react";
 import {
     Button,
-    Card,
+    Card, CardActionArea,
     CardActions,
     CardContent,
     Grid,
+    Box,
     Typography
 } from "@material-ui/core";
 import {TrendingFlat, Chat} from "@material-ui/icons";
@@ -14,6 +15,9 @@ import {unstable_createMuiStrictModeTheme} from '@material-ui/core/styles';
 import {NavLink} from "react-router-dom";
 import {getLastTime} from "../../util/TimeUtils";
 import {request} from "../../util/APIUtils";
+import {BiChat} from "react-icons/bi";
+import empty from "../../img/empty.PNG";
+
 
 const theme = unstable_createMuiStrictModeTheme();
 
@@ -46,7 +50,9 @@ class Board extends React.Component {
         const result = getLastTime(compare, now);
 
         return (
-            <Grid container spacing={10} justifyContent="center">
+            <Grid spacing={10}
+                  justifyContent="center"
+                  style={{marginRight:'3%', marginBottom:'3%'}}>
                 <Grid item xs={12} sm={12} md={12} key={board.id}>
                     <Card>
                         <Grid style={{
@@ -76,14 +82,23 @@ class Board extends React.Component {
                                                 src={image.file_download_uri}
                                                 alt="First slide"
                                                 style={{
-                                                    width: "200px",
-                                                    height: "200px",
+                                                    width: "320px",
+                                                    height: "270px",
                                                     border: "3px solid pink",
                                                     borderRadius: "16px"
                                                 }}
                                             />
                                         );
-                                    }) : ""
+                                    }) : <><img
+                                        className="d-block w-100"
+                                        src={empty}
+                                        alt="First slide"
+                                        style={{
+                                                  width: "320px",
+                                                  height: "270px",
+                                                  border: "3px solid pink",
+                                                  borderRadius: "16px"
+                                        }}/><div style={{padding:'18px'}}/> </>
                                 }
                             </Carousel>
                         </ThemeProvider>
@@ -92,16 +107,16 @@ class Board extends React.Component {
                                 {board.category_info.category_name[0]}
                             </Typography>
                             <Typography variant="subtitle2" color="textSecondary" gutterBottom>
-                                {board.status}
-                                <br/>
-                                {chatRoomCount}<Chat/>
+                                거래상태: {board.status} <a style={{marginLeft:'10px'}}></a>
+                                채팅: {chatRoomCount} <BiChat/>
                             </Typography>
                             <Typography variant="h5" component="h2" gutterBottom>
-                                {board.title}
+                                {board.title.substring(0,8)}
+                                {board.title.length > 8 ? <span>...</span> : ""}
                             </Typography>
                             <Typography variant="body2" component="p">
-                                {board.content.substring(0, 150)}
-                                {board.content.length > 150 ? <span>...</span> : ""}
+                                {board.content.substring(0, 15)}
+                                {board.content.length > 15 ? <span>...</span> : ""}
                             </Typography>
                         </CardContent>
                         <CardActions style={{justifyContent: "center"}}>
@@ -114,14 +129,15 @@ class Board extends React.Component {
                                     textDecorationLine: 'none',
                                 }}
                             >
-                                <Button size="small" color="secondary">
-                                    더보기<TrendingFlat/>
+                                <Button variant="contained" disableElevation size="small" color="secondary" >
+                                    상세 보기
                                 </Button>
                             </NavLink>
                         </CardActions>
                     </Card>
                 </Grid>
             </Grid>
+
         );
     }
 }

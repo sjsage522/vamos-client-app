@@ -5,6 +5,8 @@ import Carousel from "react-material-ui-carousel";
 import {Link, NavLink} from "react-router-dom";
 import {request} from "../../util/APIUtils";
 import Comment from "../comments/Comment";
+import {BiTrash,BiArrowFromRight} from "react-icons/bi";
+import FooterMain from "../FooterMain";
 
 const theme = unstable_createMuiStrictModeTheme();
 
@@ -87,7 +89,8 @@ class BoardDetail extends React.Component {
 
         return (
             <>
-                <Paper style={{margin: '3% 20% 0 20%', padding: 10}}>
+            <div style={{padding :'160px',background:'#F6F6F6'}}>
+                <Paper style={{margin: '3% 20% 0 20%', padding: 70}}>
                     <Grid item xs={12} sm={12} md={12} key={board.id} container justifyContent="center">
                         <ThemeProvider theme={theme}>
                             <Grid>
@@ -109,8 +112,8 @@ class BoardDetail extends React.Component {
                                                     src={image.file_download_uri}
                                                     alt="First slide"
                                                     style={{
-                                                        width: "200px",
-                                                        height: "200px",
+                                                        width: "350px",
+                                                        height: "300px",
                                                         border: "3px solid pink",
                                                         borderRadius: "16px",
                                                     }}
@@ -132,7 +135,7 @@ class BoardDetail extends React.Component {
                                 </CardContent>
                                 <CardContent>
                                     <Grid justifyContent="flex-end" container>
-                                        거래가격 : <span style={{color: 'navy'}}>&nbsp;{board.price}</span>
+                                        거래가격 : <span style={{color: 'navy'}}>&nbsp;{board.price}</span> 원
                                     </Grid>
                                     <Grid justifyContent="flex-end" container>
                                         작성자 : <span style={{color: 'hotpink'}}>&nbsp;{board.user_info.nickname}</span>
@@ -146,7 +149,7 @@ class BoardDetail extends React.Component {
                             <Grid>
                                 <CardActions>
                                     <Button size="medium" color="secondary" onClick={this.historyHandler}>
-                                        돌아가기
+                                        <BiArrowFromRight size={20} /> 돌아가기
                                     </Button>
                                     {
                                         board.user_info.email !== this.getCurrentUserEmail() ?
@@ -200,7 +203,7 @@ class BoardDetail extends React.Component {
                                                     color="secondary"
                                                     onClick={() => this.deleteBoardHandler(board.id)}
                                             >
-                                                삭제하기
+                                                삭제하기<BiTrash/>
                                             </Button>
                                             : null
                                     }
@@ -210,7 +213,7 @@ class BoardDetail extends React.Component {
                         </ThemeProvider>
                     </Grid>
                 </Paper>
-                <Paper style={{margin: '3% 20% 0 20%', padding: 10}}>
+                <Paper style={{margin: '3% 20% 0 20%', padding: 10, background:"#EDFBF7"}}>
                     <CardActions style={{justifyContent: 'center'}}>
                         <form noValidate onSubmit={this.handleSubmitComment}>
                             <Grid container>
@@ -224,14 +227,15 @@ class BoardDetail extends React.Component {
                                     multiline
                                     value={this.state.commentText}
                                     onChange={this.commentTextHandler}
+                                    style={{background:"white"}}
                                 />
                                 <Button
                                     type="submit"
                                     variant="outlined"
-                                    color="primary"
                                     size="small"
                                     style={{
-                                        marginLeft: "10px"
+                                        marginLeft: "10px",
+                                        color:"#DC2222"
                                     }}
                                 >
                                     등록
@@ -245,6 +249,8 @@ class BoardDetail extends React.Component {
                          currentUser={this.state.currentUser}
                          update={this.updateState.bind(this)}
                 />
+            </div>
+                <FooterMain/>
             </>
         );
     }

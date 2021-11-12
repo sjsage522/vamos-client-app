@@ -3,6 +3,8 @@ import React from 'react';
 import {Button, Container, Grid, TextField, Typography, InputAdornment, Link, Paper} from "@material-ui/core";
 import SearchIcon from "@material-ui/icons/Search";
 import {request} from "../../util/APIUtils";
+import {BiMessageAltError, BiCheck} from "react-icons/bi";
+import Footer from "../Footer";
 
 class Location extends React.Component {
     constructor(props) {
@@ -103,15 +105,27 @@ class Location extends React.Component {
 
     render() {
         return (
-            <>
+            <div style={{padding:"100px", backgroundColor:"#EDFBF7"}}>
                 <Container component="main" maxWidth="xs" style={{marginTop: "8%"}}>
                     <Paper style={{margin: '3% 30% 0 30%', padding: 10}}>
                         <Link href="/">
                             <Typography variant="body2" color="textPrimary" align="center">
-                                메인으로
+                               메인으로
                             </Typography>
                         </Link>
                     </Paper>
+                    <Typography variant="body1" color="textPrimary" style={{marginTop:45}}>
+                        <BiMessageAltError size={20}/> 위치를 설정해 주세요.
+
+                    </Typography>
+                   <p/>
+                    <Typography variant="body2" style={{color:"darkgrey"}}>
+                        <BiCheck size={15} style={{marginLeft:5}}/> 위치를 설정해야만 주변 중고물품을 볼 수 있습니다.
+                </Typography>
+                    <p/>
+                    <Typography variant="body2" style={{color:"darkgrey"}}>
+                        <BiCheck size={15} style={{marginLeft:5}}/> 위치를 설정해야지 판매글을 올릴 수 있습니다.
+                    </Typography>
                     <p/>
                     <Grid container spacing={2}>
                         <Grid item xs={12}>
@@ -137,8 +151,8 @@ class Location extends React.Component {
                     <Button onClick={this.execDaumPostcode}
                             fullWidth
                             variant="contained"
-                            color="primary"
                             type="submit"
+                            style={{backgroundColor:"#CD4841", color:"white"}}
                     >
                         주소검색
                     </Button>
@@ -154,13 +168,14 @@ class Location extends React.Component {
                         <Button onClick={this.uploadLocationHandler}
                                 fullWidth
                                 variant="contained"
-                                color="primary"
                                 type="submit"
+                                style={{backgroundColor:"#479F8A", color:"white", marginBottom:"10px"}}
                         >
                             위치 설정
                         </Button>}
                 </Container>
-            </>
+                <Footer/>
+            </div>
         );
     }
 }

@@ -5,6 +5,10 @@ import {AppBar, Button, Container, Grid, Toolbar, Typography} from "@material-ui
 import LoadingPage from "./components/etc/LoadingPage";
 import Board from "./components/boards/Board";
 import {NavLink} from "react-router-dom";
+import icon from "./img/icon.png";
+import {BiCurrentLocation,BiPencil,BiMap} from "react-icons/bi";
+import FooterMain from "./components/FooterMain";
+
 
 class App extends React.Component {
     constructor(props) {
@@ -58,64 +62,70 @@ class App extends React.Component {
 
         let navigationBar = (
             <AppBar position="static" style={{
-                background: "#FF3366"
+                background: "#EDFBF7"
             }}>
                 <Toolbar>
                     <Grid justifyContent="space-between" container>
                         <Grid item>
-                            <Typography variant="h6" style={{
-                                color: "white"
-                            }}>
+                            <img width="17%" src={icon} align='left' />
+                            <Typography variant="body1" style={{
+                                color: "black",
+                                marginTop:'1%',
+                                marginLeft:'300px'
+                            }}> <BiCurrentLocation style={{marginRight:'1%'}}/>
                                 {this.state.items.length > 0 ?
                                     this.state.items[0].location.address_name : "VAMOS"}
                             </Typography>
                         </Grid>
-                        <Grid>
-                            <Typography variant="overline" style={{
-                                color: "white"
-                            }}>
-                                안녕하세요 {this.state.currentUser.nickname} 님!
-                            </Typography>
-                        </Grid>
-                        <Grid>
-                            <Button>
+                        <div  className="headButton">
+                        <Grid >
+                            <Button >
                                 <NavLink to={{
                                     pathname: "/upload",
                                 }}
                                          style={{
                                              textDecorationLine: 'none',
-                                             color: 'white'
+                                             color: 'black'
                                          }}
                                 >
-                                    게시글 작성하기
+                                    게시글 작성하기 <BiPencil/>
                                 </NavLink>
                             </Button>
                             <Button>
                                 <NavLink to="/location"
                                          style={{
                                              textDecorationLine: 'none',
-                                             color: 'white'
+                                             color: 'black'
                                          }}
                                 >
-                                    위치 설정하기
+                                    위치 설정하기 <BiMap/>
                                 </NavLink>
                             </Button>
                             <Button>
                                 <NavLink to="/chatList"
                                          style={{
                                              textDecorationLine: 'none',
-                                             color: 'white'
+                                             color: '#55C2A9'
                                          }}
                                 >
                                     채팅
                                 </NavLink>
                             </Button>
                         </Grid>
+                        </div>
+
                         <Grid>
-                            <Button color="inherit" onClick={logout} style={{
-                                color: "white"
+                            <Typography variant="overline" style={{
+                                color: "black",
+                                marginTop:"5px",
+                                marginLeft:"15px"
                             }}>
-                                로그아웃
+                                안녕하세요 {this.state.currentUser.nickname} 님!
+                            </Typography>
+                            <Button color="inherit" onClick={logout} style={{
+                                color: "black"
+                            }}>
+                                / <a style={{marginLeft:'5px'}}></a>로그아웃
                             </Button>
                         </Grid>
                     </Grid>
@@ -127,7 +137,7 @@ class App extends React.Component {
             <div>
                 {navigationBar}
                 <p/>
-                <Container maxWidth="md">
+                <Container  >
                     <div className="boardList">{boards}</div>
                 </Container>
             </div>
@@ -139,6 +149,7 @@ class App extends React.Component {
         return (
             <div className="App">
                 {content}
+            <FooterMain/>
             </div>
         );
     }

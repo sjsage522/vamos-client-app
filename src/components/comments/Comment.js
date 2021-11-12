@@ -29,7 +29,7 @@ class Comment extends React.Component {
         const email = this.props.currentUser.email;
 
         return (
-            <Paper style={{margin: '3% 20% 0 20%', padding: 10}}>
+            <Paper style={{margin: '3% 20% 0 20%', padding: 10, background:"#EDFBF7"}}>
                 {
                     typeof comments !== 'undefined' && comments.length > 0 ?
                         comments.map((comment) => (

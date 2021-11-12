@@ -44,3 +44,7 @@
     left: -19px;
     top: 6px;
 }
+
+.chatList {
+    display: flex;
+}

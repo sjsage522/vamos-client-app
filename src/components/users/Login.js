@@ -5,6 +5,8 @@ import {GOOGLE_AUTH_URL, NAVER_AUTH_URL, KAKAO_AUTH_URL} from "../../config/AppC
 import googleLogo from '../../img/google-logo.png'
 import naverLogo from '../../img/naver-logo.png'
 import kakaoLogo from '../../img/kakao-logo.png'
+import icon from '../../img/icon.png'
+import Footer from "../Footer";
 
 class Login extends React.Component {
     constructor(props) {
@@ -28,11 +30,12 @@ class Login extends React.Component {
 
     render() {
         return (
-            <>
-                <Container component="main" maxWidth="xs" style={{marginTop: "8%"}}>
-                    <Grid container spacing={2}>
-                        <Grid item xs={12}>
-                            <Typography component="h1" variant="h5">
+            <div style={{ padding:"100px", background:"#EDFBF7"}}>
+                <Container component="main" maxWidth="xs" >
+                    <img width="65%" src={icon} style={{marginLeft:"14%"}} />
+                    <Grid container spacing={2} style={{marginTop:"14%"}}>
+                        <Grid item xs={12} >
+                            <Typography mb={5} component="h1" variant="h5">
                                 로그인
                             </Typography>
                         </Grid>
@@ -69,19 +72,21 @@ class Login extends React.Component {
                                 <Button
                                     fullWidth
                                     variant="contained"
-                                    color="primary"
                                     type="submit"
+                                    style={{backgroundColor : "#479F8A", color:"white"}}
                                 >
                                     로그인
                                 </Button>
                             </Grid>
-                            <Link href="/signup" variant="body2">
+                            <Link href="/signup" variant="body2" style={{marginTop:"2%", color:"#DC2222"}}>
                                 <Grid item>계정이 없습니까? 여기서 가입하세요.</Grid>
                             </Link>
                         </Grid>
                     </form>
                     <p/>
-                    <div style={{color: "dark", marginTop: "10%"}}>소셜 로그인</div>
+                    <div >---------------------------- or -----------------------------</div>
+                    <p/>
+                    <div style={{color: "dark",  marginBottom:"2%"}}>간편 로그인</div>
                     <Paper style={{margin: 0, padding: 10}}>
                         <Grid item xs={12}>
                             <a className="btn btn-block social-btn google" href={GOOGLE_AUTH_URL}
@@ -109,7 +114,8 @@ class Login extends React.Component {
                         </Grid>
                     </Paper>
                 </Container>
-            </>
+                <Footer/>
+            </div>
         );
     }
 }
