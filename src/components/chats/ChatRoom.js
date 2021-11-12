@@ -93,7 +93,6 @@ class ChatRoom extends React.Component {
 
         return (
             <>
-                <GoBackHistory history={this.props.history}/>
                 <Paper style={{margin: '3% 20% 0 20%', backgroundColor: 'lightpink'}}>
                     <Grid container justifyContent="center" style={{fontSize: '30px', color: 'white'}}>
                         {this.state.seller.nickname + " 채팅방"}
