@@ -80,6 +80,7 @@ class ChatRoomInfo extends React.Component {
                                 style={{
                                     textDecorationLine: 'none',
                                 }}
+
                             >
                                 <Button onClick={()=> window.open(`/chat/${info.board_info.id}`,'',"_blank",'width=500, height=600')} size="small" color="secondary">
                                     참여하기<BiLike/>

@@ -16,7 +16,7 @@ class Comment extends React.Component {
         request("/comment/" + id, "DELETE", null)
             .then(() => {
                 alert("삭제 되었습니다.");
-                this.props.update();
+                this.props.update(this.props.currentUser);
             })
             .catch((response) => response.json().then((json) => {
                 alert(json.error.message);

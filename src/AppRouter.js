@@ -7,7 +7,7 @@ import SignUp from "./components/users/SignUp";
 import Location from "./components/users/Location";
 import UploadBoard from "./components/boards/UploadBoard";
 import BoardDetail from "./components/boards/BoardDetail";
-import NotFound from "./components/NotFound";
+import NotFound from "./components/etc/NotFound";
 import ApplyComment from "./components/comments/ApplyComment";
 import ChatRoom from "./components/chats/ChatRoom";
 import ChatRoomList from "./components/chats/ChatRoomList";
