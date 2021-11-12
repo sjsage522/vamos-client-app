@@ -9,9 +9,10 @@ import GoBackHistory from "../../util/GoBackHistory";
 class ChatRoom extends React.Component {
     constructor(props) {
         super(props);
-        this.boardId = props.location.state.board.id;
-        this.currentUser = props.location.state.currentUser;
-        this.buyerId = props.location.state.buyerId;
+        this.identify = localStorage.getItem("id");
+        this.boardId = localStorage.getItem("boardId" + this.identify)
+        this.currentUser = JSON.parse(localStorage.getItem("currentUser" + this.identify))
+        this.buyerId = localStorage.getItem("buyerId" + this.identify)
         this.state = {
             roomId: "",
             seller: {},
@@ -40,6 +41,7 @@ class ChatRoom extends React.Component {
             })
 
             this.scrollToBottom();
+            localStorage.clear();
         }
         init().catch(console.log);
     }
@@ -91,7 +93,6 @@ class ChatRoom extends React.Component {
 
         return (
             <>
-                <GoBackHistory history={this.props.history}/>
                 <Paper style={{margin: '3% 20% 0 20%', backgroundColor: 'darkgrey'}}>
                     <Grid container justifyContent="flex-end" style={{fontSize: '23px', color: 'white'}}>
                         {this.state.seller.nickname + " 채팅방"}

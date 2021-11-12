@@ -6,7 +6,7 @@ import LoadingPage from "./components/etc/LoadingPage";
 import Board from "./components/boards/Board";
 import {NavLink} from "react-router-dom";
 import icon from "./img/icon.png";
-import {BiCurrentLocation} from "react-icons/bi";
+import {BiCurrentLocation,BiPencil,BiMap} from "react-icons/bi";
 import FooterMain from "./components/FooterMain";
 
 
@@ -67,10 +67,11 @@ class App extends React.Component {
                 <Toolbar>
                     <Grid justifyContent="space-between" container>
                         <Grid item>
-                            <img width="17%" src={icon} align='left' style={{marginLeft:'5%'}}  />
+                            <img width="17%" src={icon} align='left' />
                             <Typography variant="body1" style={{
                                 color: "black",
-                                marginTop:'1%'
+                                marginTop:'1%',
+                                marginLeft:'300px'
                             }}> <BiCurrentLocation style={{marginRight:'1%'}}/>
                                 {this.state.items.length > 0 ?
                                     this.state.items[0].location.address_name : "VAMOS"}
@@ -87,7 +88,7 @@ class App extends React.Component {
                                              color: 'black'
                                          }}
                                 >
-                                    게시글 작성하기
+                                    게시글 작성하기 <BiPencil/>
                                 </NavLink>
                             </Button>
                             <Button>
@@ -97,7 +98,7 @@ class App extends React.Component {
                                              color: 'black'
                                          }}
                                 >
-                                    위치 설정하기
+                                    위치 설정하기 <BiMap/>
                                 </NavLink>
                             </Button>
                             <Button>
@@ -116,7 +117,8 @@ class App extends React.Component {
                         <Grid>
                             <Typography variant="overline" style={{
                                 color: "black",
-                                marginTop:"5px"
+                                marginTop:"5px",
+                                marginLeft:"15px"
                             }}>
                                 안녕하세요 {this.state.currentUser.nickname} 님!
                             </Typography>
