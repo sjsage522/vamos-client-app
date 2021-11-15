@@ -67,7 +67,7 @@ class UpdateInfo extends React.Component {
                     </Grid>
                 </form>
             </Container>
-                <div style={{padding:"50px", backgroundColor:"#EDFBF7"}}></div>
+                <div style={{padding: "50px", backgroundColor: "#EDFBF7"}}/>
             <Footer/>
             </div>
         );

@@ -52,7 +52,7 @@ class Board extends React.Component {
         return (
             <Grid spacing={10}
                   justifyContent="center"
-                  style={{marginRight:'3%', marginBottom:'3%'}}>
+                  style={{marginRight: '3%', marginBottom: '3%'}}>
                 <Grid item xs={12} sm={12} md={12} key={board.id}>
                     <Card>
                         <Grid style={{
@@ -73,32 +73,38 @@ class Board extends React.Component {
 
                                 }}
                             >
-                                {board.photos.length > 0 ?
-                                    board.photos.map((image, idx) => {
-                                        return (
+                                {
+                                    board.photos.length > 0 ?
+                                        board.photos.map((image, idx) => {
+                                            return (
+                                                <img
+                                                    className="d-block w-100"
+                                                    key={idx}
+                                                    src={image.file_download_uri}
+                                                    alt="First slide"
+                                                    style={{
+                                                        width: "320px",
+                                                        height: "270px",
+                                                        border: "3px solid pink",
+                                                        borderRadius: "16px"
+                                                    }}
+                                                />
+                                            );
+                                        })
+                                        :
+                                        <>
                                             <img
                                                 className="d-block w-100"
-                                                key={idx}
-                                                src={image.file_download_uri}
+                                                src={empty}
                                                 alt="First slide"
                                                 style={{
                                                     width: "320px",
                                                     height: "270px",
                                                     border: "3px solid pink",
                                                     borderRadius: "16px"
-                                                }}
-                                            />
-                                        );
-                                    }) : <><img
-                                        className="d-block w-100"
-                                        src={empty}
-                                        alt="First slide"
-                                        style={{
-                                                  width: "320px",
-                                                  height: "270px",
-                                                  border: "3px solid pink",
-                                                  borderRadius: "16px"
-                                        }}/><div style={{padding:'18px'}}/> </>
+                                                }}/>
+                                            <div style={{padding: '18px'}}/>
+                                        </>
                                 }
                             </Carousel>
                         </ThemeProvider>
@@ -107,11 +113,11 @@ class Board extends React.Component {
                                 {board.category_info.category_name[0]}
                             </Typography>
                             <Typography variant="subtitle2" color="textSecondary" gutterBottom>
-                                거래상태: {board.status} <a style={{marginLeft:'10px'}}></a>
+                                거래상태: {board.status} <a style={{marginLeft: '10px'}}/>
                                 채팅: {chatRoomCount} <BiChat/>
                             </Typography>
                             <Typography variant="h5" component="h2" gutterBottom>
-                                {board.title.substring(0,8)}
+                                {board.title.substring(0, 8)}
                                 {board.title.length > 8 ? <span>...</span> : ""}
                             </Typography>
                             <Typography variant="body2" component="p">
@@ -129,7 +135,7 @@ class Board extends React.Component {
                                     textDecorationLine: 'none',
                                 }}
                             >
-                                <Button variant="contained" disableElevation size="small" color="secondary" >
+                                <Button variant="contained" disableElevation size="small" color="secondary">
                                     상세 보기
                                 </Button>
                             </NavLink>

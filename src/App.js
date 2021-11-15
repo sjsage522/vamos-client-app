@@ -125,7 +125,7 @@ class App extends React.Component {
                             <Button color="inherit" onClick={logout} style={{
                                 color: "black"
                             }}>
-                                / <a style={{marginLeft:'5px'}}></a>로그아웃
+                                / <a style={{marginLeft: '5px'}}/>로그아웃
                             </Button>
                         </Grid>
                     </Grid>
