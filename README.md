@@ -13,6 +13,10 @@
      />
 
 ### Main
+<img src="https://user-images.githubusercontent.com/60972528/141725877-b1af299e-75a4-41b5-90ba-71420b46f64b.png"
+     width=1000px
+     height=500px
+     />
 
 ### Detail
 
