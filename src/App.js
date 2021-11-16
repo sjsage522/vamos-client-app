@@ -51,6 +51,7 @@ class App extends React.Component {
     }
 
     render() {
+        console.log(this.state.currentUser.location)
         let boards = this.state.items.length > 0 && (
                 this.state.items.map((item, idx) => (
                     <Board
@@ -73,8 +74,8 @@ class App extends React.Component {
                                 marginTop:'1%',
                                 marginLeft:'300px'
                             }}> <BiCurrentLocation style={{marginRight:'1%'}}/>
-                                {this.state.items.length > 0 ?
-                                    this.state.items[0].location.address_name : "VAMOS"}
+                                {typeof this.state.currentUser.location !== "undefined" ?
+                                    this.state.currentUser.location.addressName : "VAMOS"}
                             </Typography>
                         </Grid>
                         <div  className="headButton">
