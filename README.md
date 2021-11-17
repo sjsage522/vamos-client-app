@@ -4,6 +4,7 @@
 - https://www.vamos.pw/
 - API server
     - https://github.com/sjsage522/vamos 
+    - https://api.vamos.pw
 
 ## Preview
 ### Login
